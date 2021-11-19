@@ -1,0 +1,17 @@
+/* Color Theme:
+Dark gunmetal #0E2533
+Absolute blue #0156CD
+Dark blue #00297a
+Mid blue #7DA2E0
+Soft blue #e4edfa 
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+.bg-my-Blue {
+  background-color: #0156cd;
+  border-bottom: 5px solid #e4edfa;
+}
+.nav_Bar_Font {
+  font-family: 'Poppins', sans-serif;
+}

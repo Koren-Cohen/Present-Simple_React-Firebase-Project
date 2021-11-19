@@ -1,0 +1,57 @@
+/* Color Theme:
+Dark gunmetal #0E2533
+Absolute blue #0156CD
+Dark blue #00297a
+Mid blue #7DA2E0
+Soft blue #e4edfa 
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
+
+#White_background {
+  margin: 20px 300px;
+  padding: 50px 100px; /*top-bottom right-left*/
+  text-align: start;
+  background-color: #e4edfa;
+  border-radius: 25px;
+  border-style: solid;
+  border-color: #0156cd;
+}
+
+#Main_Title {
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  color: #00297a;
+  font-size: 50px;
+}
+
+#Sub_title {
+  font-size: 20px;
+  text-align: center;
+}
+
+.signUpForm {
+  display: block;
+  width: 65%;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid #0156cd;
+  padding: 1em;
+  margin-bottom: 1.25rem;
+  font-size: 18px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#copyright {
+  text-align: center;
+  font-size: 14px;
+}
+
+#Submit {
+  margin-top: 55px;
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
