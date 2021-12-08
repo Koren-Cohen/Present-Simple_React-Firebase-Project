@@ -10,8 +10,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../firebase';
 
 const Nav_Bar = () => {
+  const currentUser = useAuth();
+
   return (
     <div className="nav_Bar_Font">
       <Navbar bg="my-Blue" variant="dark">
@@ -39,6 +42,9 @@ const Nav_Bar = () => {
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
+          <div id="logged_User">
+            <b>Logged in user:</b> {currentUser?.email}{' '}
+          </div>
         </Container>
       </Navbar>
     </div>
