@@ -35,7 +35,7 @@ const Login = () => {
         <b>Login</b>
       </p>
       <p id="Sub_title">
-        Dont have an account ? sign up
+        Don't have an account ? sign up
         <a href="/signup"> here</a>
       </p>
       {/* <!--Fill all the Fieldes--> */}

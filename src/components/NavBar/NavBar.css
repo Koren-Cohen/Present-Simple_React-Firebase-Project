@@ -9,7 +9,52 @@ Soft blue #e4edfa
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
 .bg-my-Blue {
-  background-color: #0156cd;
+  background-image: repeating-linear-gradient(
+      225deg,
+      hsla(210, 79%, 75%, 0.05) 0px,
+      hsla(210, 79%, 75%, 0.05) 1px,
+      transparent 1px,
+      transparent 11px,
+      hsla(210, 79%, 75%, 0.05) 11px,
+      hsla(210, 79%, 75%, 0.05) 12px,
+      transparent 12px,
+      transparent 32px
+    ),
+    repeating-linear-gradient(
+      135deg,
+      hsla(210, 79%, 75%, 0.05) 0px,
+      hsla(210, 79%, 75%, 0.05) 1px,
+      transparent 1px,
+      transparent 11px,
+      hsla(210, 79%, 75%, 0.05) 11px,
+      hsla(210, 79%, 75%, 0.05) 12px,
+      transparent 12px,
+      transparent 32px
+    ),
+    repeating-linear-gradient(
+      180deg,
+      hsla(210, 79%, 75%, 0.05) 0px,
+      hsla(210, 79%, 75%, 0.05) 1px,
+      transparent 1px,
+      transparent 11px,
+      hsla(210, 79%, 75%, 0.05) 11px,
+      hsla(210, 79%, 75%, 0.05) 12px,
+      transparent 12px,
+      transparent 32px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      hsla(210, 79%, 75%, 0.05) 0px,
+      hsla(210, 79%, 75%, 0.05) 1px,
+      transparent 1px,
+      transparent 11px,
+      hsla(210, 79%, 75%, 0.05) 11px,
+      hsla(210, 79%, 75%, 0.05) 12px,
+      transparent 12px,
+      transparent 32px
+    ),
+    linear-gradient(180deg, rgb(0, 41, 122), rgb(1, 86, 205));
+
   border-bottom: 5px solid #e4edfa;
 }
 .nav_Bar_Font {
@@ -17,4 +62,5 @@ Soft blue #e4edfa
 }
 #logged_User {
   color: #e4edfa;
+  margin-right: 15px;
 }

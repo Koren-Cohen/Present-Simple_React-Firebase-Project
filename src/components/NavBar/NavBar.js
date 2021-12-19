@@ -1,19 +1,32 @@
 // Font Awesome Source
+import * as React from 'react';
+import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleRight, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../firebase';
+import { useAuth, logout } from '../../firebase';
+import { useState } from 'react';
 
 const Nav_Bar = () => {
+  const [loading, setLoading] = useState(false);
   const currentUser = useAuth();
+
+  async function handleLogout() {
+    setLoading(true);
+    try {
+      await logout();
+    } catch {
+      alert('Error!');
+    }
+    setLoading(false);
+  }
 
   return (
     <div className="nav_Bar_Font">
@@ -27,6 +40,7 @@ const Nav_Bar = () => {
           </Navbar.Brand>{' '}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
+            {' '}
             <Nav className="me-auto" bg="light">
               <Nav.Link as={Link} to={'/'}>
                 <FontAwesomeIcon icon={faHome} /> HOME
@@ -43,7 +57,12 @@ const Nav_Bar = () => {
             </Nav>
           </Navbar.Collapse>
           <div id="logged_User">
-            <b>Logged in user:</b> {currentUser?.email}{' '}
+            <b>Logged in user:</b> {currentUser?.email}
+          </div>
+          <div>
+            <button type="button" class="btn btn-outline-light" disabled={loading || !currentUser} onClick={handleLogout}>
+              <FontAwesomeIcon icon={faSignOutAlt} />
+            </button>
           </div>
         </Container>
       </Navbar>

@@ -6,7 +6,7 @@ import { faAt } from '@fortawesome/free-solid-svg-icons';
 import { faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState } from 'react';
 import './SignUp.css';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { signup, useAuth } from '../../../firebase';
 
 const SignUp = () => {
