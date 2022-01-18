@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import './Login.css';
-import { login, logout, useAuth } from '../../../firebase';
+import { login, useAuth } from '../../../firebase';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -15,16 +16,6 @@ const Login = () => {
       await login(emailRef.current.value, passwordRef.current.value);
     } catch {
       alert('Incorrect password or email !');
-    }
-    setLoading(false);
-  }
-
-  async function handleLogout() {
-    setLoading(true);
-    try {
-      await logout();
-    } catch {
-      alert('Error!');
     }
     setLoading(false);
   }
@@ -54,19 +45,17 @@ const Login = () => {
         <p>
           <i className="fas fa-unlock-alt"></i>
           <label for="inputPassword">Password:</label>
-          <input type="password" className="form-control" placeholder="•••••••" id="PasswordField" ref={passwordRef} />
+          <input type="password" className="form-control" minlength="6" placeholder="•••••••" id="PasswordField" ref={passwordRef} />
           <small id="emailHelp" className="form-text text-muted">
             Must be at least 6 characters.
           </small>
         </p>
 
-        <button type="submit" className="btn btn-outline-primary btn-block" id="SignIn" disabled={loading || currentUser} onClick={handleLogin}>
-          Sign in
-        </button>
-        <br />
-        <button type="button" className="btn btn-outline-danger btn-block" id="SignOut" disabled={loading || !currentUser} onClick={handleLogout}>
-          Sign Out
-        </button>
+        <Link to="/profile">
+          <button type="submit" className="btn btn-outline-primary btn-block" id="SignIn" disabled={loading || currentUser} onClick={handleLogin}>
+            Sign in
+          </button>
+        </Link>
       </form>
       <br />
       <br />

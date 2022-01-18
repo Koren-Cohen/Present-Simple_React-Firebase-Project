@@ -1,0 +1,14 @@
+.posts {
+  font-size: 12px;
+  margin: 20px 300px;
+  padding: 50px 100px; /*top-bottom right-left*/
+  text-align: start;
+  border-radius: 25px;
+  border-style: solid;
+  border-color: #0156cd;
+  max-width: 540px;
+}
+
+.post {
+  max-width: 540px;
+}

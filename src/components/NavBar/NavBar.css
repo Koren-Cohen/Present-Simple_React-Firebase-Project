@@ -54,8 +54,6 @@ Soft blue #e4edfa
       transparent 32px
     ),
     linear-gradient(180deg, rgb(0, 41, 122), rgb(1, 86, 205));
-
-  border-bottom: 5px solid #e4edfa;
 }
 .nav_Bar_Font {
   font-family: 'Poppins', sans-serif;

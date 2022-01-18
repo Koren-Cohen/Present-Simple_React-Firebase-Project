@@ -8,14 +8,23 @@ import { useRef, useState } from 'react';
 import './SignUp.css';
 import { Form } from 'react-bootstrap';
 import { signup, useAuth } from '../../../firebase';
+import { db } from '../../../firebase';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, Timestamp } from 'firebase/firestore';
 
 const SignUp = () => {
+  const [newName, setNewName] = useState('');
+  const [newDate, setNewDate] = useState('');
+  // const [newEmail, setNewEmail] = useState('');
+
   const [loading, setLoading] = useState(false);
   const currentUser = useAuth();
 
   const emailRef = useRef();
   const passwordRef = useRef();
 
+  const usersCollectionRef = collection(db, 'Users');
+
+  //Authentication process by email and password
   async function handleSignup() {
     setLoading(true);
     try {
@@ -26,6 +35,16 @@ const SignUp = () => {
     setLoading(false);
   }
 
+  //Creat user func in firestore
+  const createUser = async () => {
+    await addDoc(usersCollectionRef, {
+      fullName: newName,
+      dateOfBirth: Timestamp.fromDate(new Date(newDate)).toDate(),
+      createdAt: serverTimestamp(),
+      // email: newEmail,
+    });
+  };
+
   return (
     <div id="White_background">
       <p id="Main_Title" className="font-effect-shadow-multiple">
@@ -33,21 +52,38 @@ const SignUp = () => {
         <b>Registration</b>
       </p>
       <p id="Sub_title">
-        Already have an account ? Log In<a href="/login"> here</a>
+        Already have an account ? Log In<a href="/logi n"> here</a>
       </p>
+      .
       <Form className="signUpForm">
         {/* <!--First name detail's--> */}
         <p>
           <FontAwesomeIcon icon={faSignature} />
-          <label for="inputFirstName"> Full Name:</label>
-          <input type="text" class="form-control" placeholder="Israel israeli" id="NameField" />
+          <label> Full Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Israel israeli"
+            id="NameField"
+            onChange={(event) => {
+              setNewName(event.target.value);
+            }}
+          />
         </p>
 
         {/* <!--Date of Birth detail's--> */}
         <p>
           <FontAwesomeIcon icon={faCalendarAlt} />
           <label for="inputID_Number"> Date of Birth:</label>
-          <input type="date" className="form-control" placeholder="Birthday" id="BirthdayField" />
+          <input
+            type="date"
+            className="form-control"
+            placeholder="Birthday"
+            id="BirthdayField"
+            onChange={(event) => {
+              setNewDate(event.target.value);
+            }}
+          />
         </p>
 
         {/* <!--Email detail's--> */}
@@ -59,6 +95,9 @@ const SignUp = () => {
             className="form-control"
             id="EmailField"
             aria-describedby="emailHelp"
+            // onChange={(event) => {
+            //   setNewEmail(event.target.value);
+            // }}
             placeholder="Enter email"
             ref={emailRef}
             required
@@ -81,13 +120,22 @@ const SignUp = () => {
         <p>
           <FontAwesomeIcon icon={faUnlockAlt} />
           <label for="inputPassword"> Password Confirmation:</label>
-          <input type="password" className="form-control" placeholder="•••••••" />
+          <input type="password" minlength="6" className="form-control" placeholder="•••••••" />
           <small id="emailHelp" className="form-text text-muted">
             Must be at least 6 characters.
           </small>
         </p>
 
-        <button type="submit" className="btn btn-outline-primary btn-block" id="Submit" disabled={loading || currentUser} onClick={handleSignup}>
+        <button
+          type="submit"
+          className="btn btn-outline-primary btn-block"
+          id="Submit"
+          disabled={loading || currentUser}
+          onClick={() => {
+            handleSignup();
+            createUser();
+          }}
+        >
           Submit
         </button>
       </Form>

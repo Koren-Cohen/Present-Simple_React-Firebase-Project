@@ -15,29 +15,6 @@ Soft blue #e4edfa
   border-radius: 25px;
   border-style: solid;
   border-color: #0156cd;
-  background-image: radial-gradient(
-      circle at 10% 26%,
-      rgba(90, 90, 90, 0.06) 0%,
-      rgba(90, 90, 90, 0.06) 25%,
-      rgba(137, 137, 137, 0.06) 25%,
-      rgba(137, 137, 137, 0.06) 50%,
-      rgba(185, 185, 185, 0.06) 50%,
-      rgba(185, 185, 185, 0.06) 75%,
-      rgba(232, 232, 232, 0.06) 75%,
-      rgba(232, 232, 232, 0.06) 100%
-    ),
-    radial-gradient(
-      circle at 46% 66%,
-      rgba(171, 171, 171, 0.06) 0%,
-      rgba(171, 171, 171, 0.06) 25%,
-      rgba(128, 128, 128, 0.06) 25%,
-      rgba(128, 128, 128, 0.06) 50%,
-      rgba(84, 84, 84, 0.06) 50%,
-      rgba(84, 84, 84, 0.06) 75%,
-      rgba(41, 41, 41, 0.06) 75%,
-      rgba(41, 41, 41, 0.06) 100%
-    ),
-    linear-gradient(90deg, rgb(228, 237, 250), rgb(228, 237, 250));
 }
 
 #Main_Title {
