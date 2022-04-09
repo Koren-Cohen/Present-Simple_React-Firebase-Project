@@ -12,7 +12,7 @@ import Sticky from 'react-sticky-el';
 import { useAuth } from './firebase';
 
 const App = () => {
-  const currentUser = useAuth();
+  const currentUser = useAuth(); //Uses authentication in all app pages and routers.
 
   return (
     <Router>
@@ -21,7 +21,9 @@ const App = () => {
           <NavBar />
         </Sticky>
         <Switch>
+          {/* About page always appears */}
           <Route path="/about" component={About} />
+          {/* Home, Login, SignUp pages appears when user still not signed in*/}
           {!currentUser && (
             <>
               <Route path="/" exact component={Home} />
@@ -29,6 +31,7 @@ const App = () => {
               <Route path="/signup" component={SignUp} />
             </>
           )}
+          {/* Profile and Posts Page - pages appears when user signed in*/}
           {currentUser && (
             <>
               <Route path="/profile" component={Profile} />

@@ -16,7 +16,7 @@ const Home = () => {
       Every year during the year, we encounter the following dilemmas:
       <p>
         <ul>
-          • What gift to buy for a spouse, fameliy, a friend, a father / mother and any acquaintance?
+          • What gift to buy for a spouse, family, a friend, a father / mother and any acquaintance?
           <br />
           • To what extent is the shirt / pants / shoes I want to buy for him / her?
           <br />
