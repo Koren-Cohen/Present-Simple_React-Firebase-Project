@@ -12,3 +12,28 @@
 .post {
   max-width: 540px;
 }
+#NewPostPopup {
+  display: block;
+  position: inherit;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 34%;
+}
+
+label {
+  margin-right: 5px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+#textareaID {
+  margin-top: 15px;
+}
+
+#Submit {
+  margin-top: 20px;
+}
+
+#PostCard {
+  width: 200px;
+}

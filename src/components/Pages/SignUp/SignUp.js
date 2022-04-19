@@ -9,7 +9,7 @@ import './SignUp.css';
 import { Form } from 'react-bootstrap';
 import { signup, useAuth } from '../../../firebase';
 import { db } from '../../../firebase';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, Timestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
 
 const SignUp = () => {
   const [newName, setNewName] = useState('');
@@ -35,7 +35,7 @@ const SignUp = () => {
     setLoading(false);
   }
 
-  //Creat user func in firestore
+  //Create user func in firestore
   const createUser = async () => {
     await addDoc(usersCollectionRef, {
       fullName: newName,
