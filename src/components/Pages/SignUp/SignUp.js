@@ -7,14 +7,15 @@ import { faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState } from 'react';
 import './SignUp.css';
 import { Form } from 'react-bootstrap';
-import { signup, useAuth } from '../../../firebase';
-import { db } from '../../../firebase';
-import { collection, addDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
+import { signup, useAuth, db } from '../../../firebase';
+import { collection, addDoc, setDoc, serverTimestamp, Timestamp, doc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import { Nav } from 'react-bootstrap';
 
 const SignUp = () => {
   const [newName, setNewName] = useState('');
   const [newDate, setNewDate] = useState('');
-  // const [newEmail, setNewEmail] = useState('');
+  const [newEmail, setNewEmail] = useState('');
 
   const [loading, setLoading] = useState(false);
   const currentUser = useAuth();
@@ -22,10 +23,8 @@ const SignUp = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const usersCollectionRef = collection(db, 'Users');
-
-  //Authentication process by email and password
-  async function handleSignup() {
+  //1.Sign up process by the func 'signup' (in 'firebase' file).
+  const handleSignup = async () => {
     setLoading(true);
     try {
       await signup(emailRef.current.value, passwordRef.current.value);
@@ -33,16 +32,39 @@ const SignUp = () => {
       alert('This email is already connected to an account !');
     }
     setLoading(false);
-  }
+    createUser();
+  };
 
-  //Create user func in firestore
   const createUser = async () => {
-    await addDoc(usersCollectionRef, {
-      fullName: newName,
-      dateOfBirth: Timestamp.fromDate(new Date(newDate)).toDate(),
-      createdAt: serverTimestamp(),
-      // email: newEmail,
-    });
+    alert('The func: createUser() activated');
+    const auth = getAuth();
+    //2.The user object has basic properties such as display name, email, uid...
+    const user = auth.currentUser;
+
+    //2.1.Checking if the user is signed in or not
+    if (user !== null) {
+      const uid = user.uid;
+      //2.2.Create a ref of the users list in the DB.
+      const usersListRef = doc(db, 'Users', uid);
+      alert('The user is connected.\nUID: ' + uid);
+
+      //2.3.Create user func in firestore
+      await setDoc(usersListRef, {
+        fullName: newName,
+        dateOfBirth: Timestamp.fromDate(new Date(newDate)).toDate(),
+        createdAt: serverTimestamp(),
+        email: newEmail,
+        User_ID: uid,
+      })
+        .then(() => {
+          alert('Data added successfully!');
+        })
+        .catch((error) => {
+          alert('Unsuccessful operation, error:', error);
+        });
+    } else {
+      alert('The user is NULL.');
+    }
   };
 
   return (
@@ -52,7 +74,7 @@ const SignUp = () => {
         <b>Registration</b>
       </p>
       <p id="Sub_title">
-        Already have an account ? Log In<a href="/logi n"> here</a>
+        Already have an account ? Log In<a href="/login"> here</a>
       </p>
       .
       <Form className="signUpForm">
@@ -95,9 +117,9 @@ const SignUp = () => {
             className="form-control"
             id="EmailField"
             aria-describedby="emailHelp"
-            // onChange={(event) => {
-            //   setNewEmail(event.target.value);
-            // }}
+            onChange={(event) => {
+              setNewEmail(event.target.value);
+            }}
             placeholder="Enter email"
             ref={emailRef}
             required
@@ -133,7 +155,6 @@ const SignUp = () => {
           disabled={loading || currentUser}
           onClick={() => {
             handleSignup();
-            createUser();
           }}
         >
           Submit

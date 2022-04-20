@@ -24,8 +24,8 @@ const PostsPage = () => {
 
   return (
     <div>
-      <div id="NewPostPopup">
-        <Button variant="btn btn-outline-primary btn-block" onClick={() => setModalShow(true)}>
+      <div id="NewPostPopupBtn">
+        <Button variant="success btn-block" onClick={() => setModalShow(true)}>
           What is the next gift you would like to receive? Share Now
         </Button>
         {/* Popup dialog element: */}

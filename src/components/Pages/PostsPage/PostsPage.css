@@ -12,12 +12,14 @@
 .post {
   max-width: 540px;
 }
-#NewPostPopup {
+#NewPostPopupBtn {
   display: block;
   position: inherit;
   margin-top: 20px;
   margin-bottom: 20px;
-  margin-left: 34%;
+  margin-left: 30%;
+  margin-right: 30%;
+  text-align: center;
 }
 
 label {

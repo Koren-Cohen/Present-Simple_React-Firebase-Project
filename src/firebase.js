@@ -23,14 +23,17 @@ const auth = getAuth();
 const storage = getStorage();
 export const db = getFirestore(app);
 
+//Sign up function using: createUserWithEmailAndPassword
 export function signup(email, password) {
   return createUserWithEmailAndPassword(auth, email, password);
 }
 
+//Login function using: signInWithEmailAndPassword
 export function login(email, password) {
   return signInWithEmailAndPassword(auth, email, password);
 }
 
+//Logout function using: signOut
 export function logout() {
   return signOut(auth);
 }
