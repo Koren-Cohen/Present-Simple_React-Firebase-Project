@@ -1,11 +1,17 @@
-// Font Awesome Source
 import * as React from 'react';
+// Font Awesome Source
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressCard, faArrowAltCircleRight, faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHome,
+  faAddressCard,
+  faArrowAltCircleRight,
+  faSignOutAlt,
+  faUserCircle,
+  faSignInAlt,
+  faInfoCircle,
+  faUserPlus,
+} from '@fortawesome/free-solid-svg-icons';
+//----------------------------------------------------------------------------//
 import 'bootstrap/dist/css/bootstrap.css';
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import './NavBar.css';

@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap';
 import './PostsPage.css';
 import { db } from '../../../firebase';
 import { collection, addDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 function CreatePostPopup(props) {
   //   Input REFERENCES - useState
@@ -27,6 +28,11 @@ function CreatePostPopup(props) {
   //-------------------ADDING DOCUMENT-------------------//
 
   //Add Document - Auto ID
+  const auth = getAuth();
+  //2.The user object has basic properties such as display name, email, uid...
+  const user = auth.currentUser;
+  const uid = user.uid;
+  const email = user.email;
 
   async function AddDocument_AutoID() {
     var ref = collection(db, 'Gifts-Posts-List');
@@ -39,6 +45,8 @@ function CreatePostPopup(props) {
       Favorite_Brand: FavoriteBrandBox,
       Gift_URL: GiftURLBox,
       Discription: Text_AreaBox,
+      User_ID: uid,
+      Email: email,
     })
       .then(() => {
         alert('Gift Post added successfully!');
@@ -67,6 +75,7 @@ function CreatePostPopup(props) {
                 setNewEventType(event.target.value);
               }}
             >
+              <option selected>Choose category:</option>
               <option value="Birthday">Birthday</option>
               <option value="Holiday">Holiday</option>
               <option value="Anniversary">Anniversary</option>
@@ -151,7 +160,25 @@ function CreatePostPopup(props) {
             />
           </div>
 
-          <textarea
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Description</span>
+            </div>
+            <textarea
+              id="Text_AreaIDbox"
+              class="form-control"
+              aria-label="With textarea"
+              placeholder="Here is the place to add more details (Favorite figure, sizes, colors, product model/version and more...)"
+              rows="5"
+              cols="50"
+              required
+              onChange={(event) => {
+                setNewText_AreaID(event.target.value);
+              }}
+            ></textarea>
+          </div>
+
+          {/* <textarea
             id="Text_AreaIDbox"
             name="message"
             rows="5"
@@ -161,7 +188,7 @@ function CreatePostPopup(props) {
             onChange={(event) => {
               setNewText_AreaID(event.target.value);
             }}
-          ></textarea>
+          ></textarea> */}
         </div>
         <button
           type="submit"

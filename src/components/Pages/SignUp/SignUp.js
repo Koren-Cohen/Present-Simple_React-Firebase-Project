@@ -11,6 +11,7 @@ import { signup, useAuth, db } from '../../../firebase';
 import { collection, addDoc, setDoc, serverTimestamp, Timestamp, doc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
   const [newName, setNewName] = useState('');
@@ -28,43 +29,35 @@ const SignUp = () => {
     setLoading(true);
     try {
       await signup(emailRef.current.value, passwordRef.current.value);
+      createUser();
     } catch {
       alert('This email is already connected to an account !');
     }
     setLoading(false);
-    createUser();
   };
 
   const createUser = async () => {
-    alert('The func: createUser() activated');
     const auth = getAuth();
     //2.The user object has basic properties such as display name, email, uid...
     const user = auth.currentUser;
+    const uid = user.uid;
+    //2.2.Create a ref of the users list in the DB.
+    const usersListRef = doc(db, 'Users', uid);
 
-    //2.1.Checking if the user is signed in or not
-    if (user !== null) {
-      const uid = user.uid;
-      //2.2.Create a ref of the users list in the DB.
-      const usersListRef = doc(db, 'Users', uid);
-      alert('The user is connected.\nUID: ' + uid);
-
-      //2.3.Create user func in firestore
-      await setDoc(usersListRef, {
-        fullName: newName,
-        dateOfBirth: Timestamp.fromDate(new Date(newDate)).toDate(),
-        createdAt: serverTimestamp(),
-        email: newEmail,
-        User_ID: uid,
+    //2.3.Create user func in firestore
+    await setDoc(usersListRef, {
+      fullName: newName,
+      dateOfBirth: Timestamp.fromDate(new Date(newDate)).toDate(),
+      createdAt: serverTimestamp(),
+      email: newEmail,
+      User_ID: uid,
+    })
+      .then(() => {
+        alert('User data added successfully!');
       })
-        .then(() => {
-          alert('Data added successfully!');
-        })
-        .catch((error) => {
-          alert('Unsuccessful operation, error:', error);
-        });
-    } else {
-      alert('The user is NULL.');
-    }
+      .catch((error) => {
+        alert('Unsuccessful operation, error:', error);
+      });
   };
 
   return (
@@ -147,18 +140,20 @@ const SignUp = () => {
             Must be at least 6 characters.
           </small>
         </p>
-
-        <button
-          type="submit"
-          className="btn btn-outline-primary btn-block"
-          id="Submit"
-          disabled={loading || currentUser}
-          onClick={() => {
-            handleSignup();
-          }}
-        >
-          Submit
-        </button>
+        <Link to="/about">
+          {' '}
+          <button
+            type="submit"
+            className="btn btn-outline-primary btn-block"
+            id="Submit"
+            disabled={loading || currentUser}
+            onClick={() => {
+              handleSignup();
+            }}
+          >
+            Submit
+          </button>
+        </Link>
       </Form>
       <br />
       <br />

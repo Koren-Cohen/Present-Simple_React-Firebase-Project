@@ -36,6 +36,46 @@ label {
   margin-top: 20px;
 }
 
-#PostCard {
-  width: 200px;
+#post-card {
+  /*card sizes*/
+  height: 250px;
+  width: 50%;
+
+  /*card background color*/
+  background-color: #e4edfa;
+  border-radius: 8px;
+
+  display: flex;
+  position: inherit;
+  margin-top: 20px;
+  margin-bottom: 40px;
+
+  margin-left: 25%;
+  margin-right: 25%;
+  padding: 15px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#img-box {
+  /*card border props*/
+
+  flex: 1;
+  margin: 10px;
+}
+
+#form-box {
+  margin: 10px;
+  flex: 3;
+}
+
+#form-row {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+img {
+  /*img circle border*/
+  /* border-style: solid;
+  border-color: #0156cd;
+  border-radius: 20px; */
 }
