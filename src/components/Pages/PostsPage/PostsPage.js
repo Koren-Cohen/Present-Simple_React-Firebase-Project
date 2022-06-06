@@ -26,6 +26,10 @@ const PostsPage = () => {
 
   return (
     <div>
+      <div id="Main_Title">
+        <i id="Main_Title_Icon" className="fas fa-info-circle"></i> <b>Gift Post's</b>
+      </div>
+
       <div id="NewPostPopupBtn">
         <Button variant="info btn-block" onClick={() => setModalShow(true)}>
           What is the next gift you would like to receive? Share Now

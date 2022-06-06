@@ -9,12 +9,14 @@ Soft blue #e4edfa
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
 
 #White_background {
-  margin: 20px 300px;
+  margin-top: 0px;
+  margin-left: 300px;
+  margin-right: 300px;
   padding: 50px 100px; /*top-bottom right-left*/
   text-align: start;
-  border-radius: 25px;
-  border-style: solid;
-  border-color: #0156cd;
+  border-radius:0px 0px 15px 15px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 }
 
 #Main_Title {
@@ -33,8 +35,6 @@ Soft blue #e4edfa
   display: block;
   width: 65%;
   box-sizing: border-box;
-  border-radius: 8px;
-  border: 1px solid #0156cd;
   padding: 1em;
   margin-bottom: 1.25rem;
   font-size: 18px;

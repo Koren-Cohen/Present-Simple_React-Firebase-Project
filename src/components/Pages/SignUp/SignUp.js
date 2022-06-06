@@ -69,12 +69,12 @@ const SignUp = () => {
       <p id="Sub_title">
         Already have an account ? Log In<a href="/login"> here</a>
       </p>
-      .
+      
       <Form className="signUpForm">
         {/* <!--First name detail's--> */}
         <p>
-          <FontAwesomeIcon icon={faSignature} />
-          <label> Full Name:</label>
+          <FontAwesomeIcon icon={faSignature} />&nbsp;
+          <label>Full Name:</label>
           <input
             type="text"
             class="form-control"
@@ -88,7 +88,7 @@ const SignUp = () => {
 
         {/* <!--Date of Birth detail's--> */}
         <p>
-          <FontAwesomeIcon icon={faCalendarAlt} />
+          <FontAwesomeIcon icon={faCalendarAlt} />&nbsp;
           <label for="inputID_Number"> Date of Birth:</label>
           <input
             type="date"
@@ -103,7 +103,7 @@ const SignUp = () => {
 
         {/* <!--Email detail's--> */}
         <p>
-          <FontAwesomeIcon icon={faAt} />
+          <FontAwesomeIcon icon={faAt} />&nbsp;
           <label for="exampleInputEmail1"> Email address</label>
           <input
             type="email"
@@ -124,7 +124,7 @@ const SignUp = () => {
 
         {/* <!--Password detail's--> */}
         <p>
-          <FontAwesomeIcon icon={faUnlockAlt} />
+          <FontAwesomeIcon icon={faUnlockAlt} />&nbsp;
           <label for="inputPassword"> Password:</label>
           <input type="password" className="form-control" placeholder="•••••••" id="PasswordField" ref={passwordRef} />
           <small id="emailHelp" className="form-text text-muted">
@@ -133,7 +133,7 @@ const SignUp = () => {
         </p>
 
         <p>
-          <FontAwesomeIcon icon={faUnlockAlt} />
+          <FontAwesomeIcon icon={faUnlockAlt} />&nbsp;
           <label for="inputPassword"> Password Confirmation:</label>
           <input type="password" minlength="6" className="form-control" placeholder="•••••••" />
           <small id="emailHelp" className="form-text text-muted">
