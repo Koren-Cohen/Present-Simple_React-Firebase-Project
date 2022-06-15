@@ -1,22 +1,31 @@
 // Font Awesome Source
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignature } from '@fortawesome/free-solid-svg-icons';
-import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
-import { faAt } from '@fortawesome/free-solid-svg-icons';
-import { faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
-import { useRef, useState } from 'react';
-import './SignUp.css';
-import { Form } from 'react-bootstrap';
-import { signup, useAuth, db } from '../../../firebase';
-import { collection, addDoc, setDoc, serverTimestamp, Timestamp, doc } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-import { Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faAt,
+  faUnlockAlt,
+  faCalendarAlt,
+  faSignature,
+} from "@fortawesome/free-solid-svg-icons";
+import { useRef, useState } from "react";
+import "./SignUp.css";
+import { Form } from "react-bootstrap";
+import { signup, useAuth, db } from "../../../firebase";
+import {
+  collection,
+  addDoc,
+  setDoc,
+  serverTimestamp,
+  Timestamp,
+  doc,
+} from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const [newName, setNewName] = useState('');
-  const [newDate, setNewDate] = useState('');
-  const [newEmail, setNewEmail] = useState('');
+  const [newName, setNewName] = useState("");
+  const [newDate, setNewDate] = useState("");
+  const [newEmail, setNewEmail] = useState("");
 
   const [loading, setLoading] = useState(false);
   const currentUser = useAuth();
@@ -31,7 +40,7 @@ const SignUp = () => {
       await signup(emailRef.current.value, passwordRef.current.value);
       createUser();
     } catch {
-      alert('This email is already connected to an account !');
+      alert("This email is already connected to an account !");
     }
     setLoading(false);
   };
@@ -42,7 +51,7 @@ const SignUp = () => {
     const user = auth.currentUser;
     const uid = user.uid;
     //2.2.Create a ref of the users list in the DB.
-    const usersListRef = doc(db, 'Users', uid);
+    const usersListRef = doc(db, "Users", uid);
 
     //2.3.Create user func in firestore
     await setDoc(usersListRef, {
@@ -53,10 +62,10 @@ const SignUp = () => {
       User_ID: uid,
     })
       .then(() => {
-        alert('User data added successfully!');
+        alert("User data added successfully!");
       })
       .catch((error) => {
-        alert('Unsuccessful operation, error:', error);
+        alert("Unsuccessful operation, error:", error);
       });
   };
 
@@ -67,13 +76,13 @@ const SignUp = () => {
         <b>Registration</b>
       </p>
       <p id="Sub_title">
-        Already have an account ? Log In<a href="/login"> here</a>
+        Already have an account ? Log In&nbsp;<a href="/login">here</a>
       </p>
-      
       <Form className="signUpForm">
         {/* <!--First name detail's--> */}
         <p>
-          <FontAwesomeIcon icon={faSignature} />&nbsp;
+          <FontAwesomeIcon icon={faSignature} />
+          &nbsp;
           <label>Full Name:</label>
           <input
             type="text"
@@ -88,7 +97,8 @@ const SignUp = () => {
 
         {/* <!--Date of Birth detail's--> */}
         <p>
-          <FontAwesomeIcon icon={faCalendarAlt} />&nbsp;
+          <FontAwesomeIcon icon={faCalendarAlt} />
+          &nbsp;
           <label for="inputID_Number"> Date of Birth:</label>
           <input
             type="date"
@@ -103,7 +113,8 @@ const SignUp = () => {
 
         {/* <!--Email detail's--> */}
         <p>
-          <FontAwesomeIcon icon={faAt} />&nbsp;
+          <FontAwesomeIcon icon={faAt} />
+          &nbsp;
           <label for="exampleInputEmail1"> Email address</label>
           <input
             type="email"
@@ -124,24 +135,37 @@ const SignUp = () => {
 
         {/* <!--Password detail's--> */}
         <p>
-          <FontAwesomeIcon icon={faUnlockAlt} />&nbsp;
+          <FontAwesomeIcon icon={faUnlockAlt} />
+          &nbsp;
           <label for="inputPassword"> Password:</label>
-          <input type="password" className="form-control" placeholder="•••••••" id="PasswordField" ref={passwordRef} />
+          <input
+            type="password"
+            className="form-control"
+            placeholder="•••••••"
+            id="PasswordField"
+            ref={passwordRef}
+          />
           <small id="emailHelp" className="form-text text-muted">
             Must be at least 6 characters.
           </small>
         </p>
 
         <p>
-          <FontAwesomeIcon icon={faUnlockAlt} />&nbsp;
+          <FontAwesomeIcon icon={faUnlockAlt} />
+          &nbsp;
           <label for="inputPassword"> Password Confirmation:</label>
-          <input type="password" minlength="6" className="form-control" placeholder="•••••••" />
+          <input
+            type="password"
+            minlength="6"
+            className="form-control"
+            placeholder="•••••••"
+          />
           <small id="emailHelp" className="form-text text-muted">
             Must be at least 6 characters.
           </small>
         </p>
         <Link to="/about">
-          {' '}
+          {" "}
           <button
             type="submit"
             className="btn btn-outline-primary btn-block"
@@ -159,8 +183,9 @@ const SignUp = () => {
       <br />
       <br />
       <p className="copyright" id="copyright">
-        Ⓒ Present <i className="far fa-arrow-alt-circle-right"></i> Simple - Developed by Koren Cohen
-      </p>{' '}
+        Ⓒ Present <i className="far fa-arrow-alt-circle-right"></i> Simple -
+        Developed by Koren Cohen
+      </p>{" "}
     </div>
   );
 };

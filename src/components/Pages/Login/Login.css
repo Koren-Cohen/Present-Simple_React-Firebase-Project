@@ -33,9 +33,6 @@ Soft blue #e4edfa
 .logInForm {
   display: block;
   width: 65%;
-  box-sizing: border-box;
-  border-radius: 8px;
-  border: 1px solid #c4c4c4;
   padding: 1em;
   margin-bottom: 1.25rem;
   font-size: 18px;
