@@ -18,7 +18,7 @@ import {
   Timestamp,
   doc,
 } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -36,12 +36,25 @@ const SignUp = () => {
   //1.Sign up process by the func 'signup' (in 'firebase' file).
   const handleSignup = async () => {
     setLoading(true);
-    try {
-      await signup(emailRef.current.value, passwordRef.current.value);
-      createUser();
-    } catch {
-      alert("This email is already connected to an account !");
-    }
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+    const auth = getAuth();
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        createUser();
+      })
+      .catch((error) => {
+        alert(
+          "Error Code: " +
+            error.code +
+            "\nError message: '" +
+            error.message +
+            "'"
+        );
+      });
     setLoading(false);
   };
 

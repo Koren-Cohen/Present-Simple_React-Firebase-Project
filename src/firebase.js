@@ -1,9 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 // Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from 'firebase/auth';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import { getFirestore } from '@firebase/firestore';
+import { initializeApp } from "firebase/app";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getFirestore } from "@firebase/firestore";
 
 // My web app's Firebase configuration
 const firebaseConfig = {
@@ -25,12 +32,30 @@ export const db = getFirestore(app);
 
 //Sign up function using: createUserWithEmailAndPassword
 export function signup(email, password) {
-  return createUserWithEmailAndPassword(auth, email, password);
+  return createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log(user);
+    })
+    .catch((error) => {
+      alert(
+        "Error Code: " + error.code + "\nError message: '" + error.message + "'"
+      );
+    });
 }
 
 //Login function using: signInWithEmailAndPassword
 export function login(email, password) {
-  return signInWithEmailAndPassword(auth, email, password);
+  return signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log(user);
+    })
+    .catch((error) => {
+      alert(
+        "Error Code: " + error.code + "\nError message: '" + error.message + "'"
+      );
+    });
 }
 
 //Logout function using: signOut
@@ -52,7 +77,7 @@ export function useAuth() {
 
 // Storage
 export async function upload(file, currentUser, setLoading) {
-  const fileRef = ref(storage, currentUser.uid + '.png');
+  const fileRef = ref(storage, currentUser.uid + ".png");
 
   setLoading(true);
 
@@ -62,5 +87,5 @@ export async function upload(file, currentUser, setLoading) {
   updateProfile(currentUser, { photoURL });
 
   setLoading(false);
-  alert('Uploaded file!');
+  alert("Uploaded file!");
 }

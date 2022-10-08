@@ -74,7 +74,7 @@ const Login = () => {
           </small>
         </p>
 
-        <Link to="/profile">
+        <Link to="/about">
           <button
             type="submit"
             className="btn btn-outline-primary btn-block"
