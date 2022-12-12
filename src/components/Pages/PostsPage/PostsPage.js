@@ -70,8 +70,8 @@ const PostsPage = () => {
                 {post.Gift_URL}
               </div>
               <div id="form-row">
-                <b>Gift Discription: </b>
-                {post.Discription}
+                <b>Gift Description: </b>
+                {post.Description}
               </div>
               <div class="card-footer">
                 <small class="text-muted">

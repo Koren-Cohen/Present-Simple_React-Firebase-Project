@@ -61,7 +61,7 @@ function CreatePostPopup(props) {
       Gift_Category: GiftCategoryBox,
       Favorite_Brand: FavoriteBrandBox,
       Gift_URL: GiftURLBox,
-      Discription: Text_AreaBox,
+      Description: Text_AreaBox,
       User_ID: uid,
       Email: email,
       FullName: fullName,
