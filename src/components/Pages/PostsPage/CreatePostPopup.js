@@ -1,19 +1,26 @@
-import React from 'react';
-import { useState } from 'react';
-import { Modal } from 'react-bootstrap';
-import './PostsPage.css';
-import { db } from '../../../firebase';
-import { collection, addDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import React from "react";
+import { useState } from "react";
+import { Modal } from "react-bootstrap";
+import "./PostsPage.css";
+import { db } from "../../../firebase";
+import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  Timestamp,
+} from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 function CreatePostPopup(props) {
   //   Input REFERENCES - useState
-  const [EventTypeBox, setNewEventType] = useState('');
-  const [EventDateBox, setNewEventDate] = useState('');
-  const [GiftCategoryBox, setNewGiftCategory] = useState('');
-  const [FavoriteBrandBox, setNewFavoriteBrand] = useState('');
-  const [GiftURLBox, setNewGiftURL] = useState('');
-  const [Text_AreaBox, setNewText_AreaID] = useState('');
+  const [EventTypeBox, setNewEventType] = useState("");
+  const [EventDateBox, setNewEventDate] = useState("");
+  const [GiftCategoryBox, setNewGiftCategory] = useState("");
+  const [FavoriteBrandBox, setNewFavoriteBrand] = useState("");
+  const [GiftURLBox, setNewGiftURL] = useState("");
+  const [Text_AreaBox, setNewText_AreaID] = useState("");
+  const [fullName, setFullName] = useState("");
 
   //-------------------ADDING POST TO THE DATABASE-------------------//
 
@@ -34,8 +41,18 @@ function CreatePostPopup(props) {
   const uid = user.uid;
   const email = user.email;
 
+  //Get the current user full name
+  const docRef = doc(db, "Users", uid);
+  getDoc(docRef).then((docSnap) => {
+    if (docSnap.exists()) {
+      setFullName(docSnap.data().fullName);
+    } else {
+      alert("No such Document");
+    }
+  });
+
   async function AddDocument_AutoID() {
-    var ref = collection(db, 'Gifts-Posts-List');
+    var ref = collection(db, "GiftPosts");
 
     const docRef = await addDoc(ref, {
       Created_At: serverTimestamp(),
@@ -47,21 +64,29 @@ function CreatePostPopup(props) {
       Discription: Text_AreaBox,
       User_ID: uid,
       Email: email,
+      FullName: fullName,
     })
       .then(() => {
-        alert('Gift Post added successfully!');
+        alert("Gift Post added successfully!");
       })
       .catch((error) => {
-        alert('Unsuccessful operation, error:', error);
+        alert("Unsuccessful operation, error:", error);
       });
   }
 
   //-------------------Return HTML-------------------//
 
   return (
-    <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Create New Gift Post</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Create New Gift Post
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <h5>Fill The Following Fields:</h5>

@@ -29,9 +29,9 @@ export default function Profile() {
 
   getDoc(docRef).then((docSnap) => {
     if (docSnap.exists()) {
-      setUsersFullName(docSnap.data().fullName); //Pull the 'NameOfStd' value from the firestore DB -> to the input field: 'NameBox'
-      setUsersDateOfBirth(moment(docSnap.data().dateOfBirth.toDate()).format('LL')); //Pull the 'Section' value from the firestore DB -> to the input field: 'SecBox'
-      setUsersJoinTime(moment(docSnap.data().createdAt.toDate()).format('lll')); //Pull the 'Gender' value from the firestore DB -> to the input field: 'GenBox'
+      setUsersFullName(docSnap.data().fullName);
+      setUsersDateOfBirth(moment(docSnap.data().dateOfBirth.toDate()).format('LL'));
+      setUsersJoinTime(moment(docSnap.data().createdAt.toDate()).format('lll'));
     } else {
       alert('No such Document');
     }

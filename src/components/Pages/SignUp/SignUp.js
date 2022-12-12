@@ -30,12 +30,33 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const currentUser = useAuth();
 
+  const fullNameRef = useRef();
+  const dateRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const passwordConfRef = useRef();
 
   //1.Sign up process by the func 'signup' (in 'firebase' file).
   const handleSignup = async () => {
     setLoading(true);
+
+    if (fullNameRef.current.value == "" || !fullNameRef.current.value) {
+      alert("'Full Name' field is empty.\nPlease input value.");
+      return;
+    } else if (dateRef.current.value == "" || !dateRef.current.value) {
+      alert("'Date of birth' field is empty.\nPlease input value.");
+      return;
+    } else if (emailRef.current.value == "" || !emailRef.current.value) {
+      alert("'Email' field is empty.\nPlease input value.");
+      return;
+    } else if (passwordRef.current.value == "" || !passwordRef.current.value) {
+      alert("'Password' field is empty.\nPlease input value.");
+      return;
+    } else if (passwordConfRef.current.value != passwordRef.current.value) {
+      alert("The password confirmation does not match");
+      return;
+    }
+
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     const auth = getAuth();
@@ -72,7 +93,8 @@ const SignUp = () => {
       dateOfBirth: Timestamp.fromDate(new Date(newDate)).toDate(),
       createdAt: serverTimestamp(),
       email: newEmail,
-      User_ID: uid,
+      user_ID: uid,
+      joinPlatform: "Web",
     })
       .then(() => {
         alert("User data added successfully!");
@@ -98,6 +120,8 @@ const SignUp = () => {
           &nbsp;
           <label>Full Name:</label>
           <input
+            required
+            ref={fullNameRef}
             type="text"
             class="form-control"
             placeholder="Israel israeli"
@@ -107,13 +131,14 @@ const SignUp = () => {
             }}
           />
         </p>
-
         {/* <!--Date of Birth detail's--> */}
         <p>
           <FontAwesomeIcon icon={faCalendarAlt} />
           &nbsp;
           <label for="inputID_Number"> Date of Birth:</label>
           <input
+            required
+            ref={dateRef}
             type="date"
             className="form-control"
             placeholder="Birthday"
@@ -123,13 +148,13 @@ const SignUp = () => {
             }}
           />
         </p>
-
         {/* <!--Email detail's--> */}
         <p>
           <FontAwesomeIcon icon={faAt} />
           &nbsp;
           <label for="exampleInputEmail1"> Email address</label>
           <input
+            required
             type="email"
             className="form-control"
             id="EmailField"
@@ -139,19 +164,18 @@ const SignUp = () => {
             }}
             placeholder="Enter email"
             ref={emailRef}
-            required
           />
           <small id="emailHelp" className="form-text text-muted">
             We'll never share your email with anyone else.
           </small>
         </p>
-
         {/* <!--Password detail's--> */}
         <p>
           <FontAwesomeIcon icon={faUnlockAlt} />
           &nbsp;
           <label for="inputPassword"> Password:</label>
           <input
+            required
             type="password"
             className="form-control"
             placeholder="•••••••"
@@ -162,16 +186,17 @@ const SignUp = () => {
             Must be at least 6 characters.
           </small>
         </p>
-
         <p>
           <FontAwesomeIcon icon={faUnlockAlt} />
           &nbsp;
           <label for="inputPassword"> Password Confirmation:</label>
           <input
+            required
             type="password"
             minlength="6"
             className="form-control"
             placeholder="•••••••"
+            ref={passwordConfRef}
           />
           <small id="emailHelp" className="form-text text-muted">
             Must be at least 6 characters.
