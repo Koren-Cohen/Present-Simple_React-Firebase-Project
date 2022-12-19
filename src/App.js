@@ -1,15 +1,15 @@
-import './App.css';
-import NavBar from './components/NavBar/NavBar';
-import PostsPage from './components/Pages/PostsPage/PostsPage';
-import Profile from './components/Pages/Profile/Profile';
-import About from './components/Pages/About/About';
-import Login from './components/Pages/Login/Login';
-import Home from './components/Pages/HomePage/Home';
-import SignUp from './components/Pages/SignUp/SignUp';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Sticky from 'react-sticky-el';
-import { useAuth } from './firebase';
+import "./App.css";
+import NavBar from "./components/NavBar/NavBar";
+import PostsPage from "./components/Pages/PostsPage/PostsPage";
+import Profile from "./components/Pages/Profile/Profile";
+import About from "./components/Pages/About/About";
+import Login from "./components/Pages/Login/Login";
+import Home from "./components/Pages/HomePage/Home";
+import SignUp from "./components/Pages/SignUp/SignUp";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Sticky from "react-sticky-el";
+import { useAuth } from "./firebase";
 
 const App = () => {
   const currentUser = useAuth(); //Uses authentication in all app pages and routers.
@@ -17,9 +17,7 @@ const App = () => {
   return (
     <Router>
       <div className="App">
-        <Sticky>
-          <NavBar />
-        </Sticky>
+        <NavBar />
         <Switch>
           {/* About page always appears */}
           <Route path="/about" component={About} />
