@@ -64,50 +64,52 @@ const CreatePostPopup = (props) => {
   const validateFields = () => {
     if (eventTypeRef.current.value == "" || !eventTypeRef.current.value) {
       alert("'Event type' field is empty.\nPlease input value.");
-      return;
+      return false;
     } else if (
       eventDateRef.current.value == "" ||
       !eventDateRef.current.value
     ) {
       alert("'Event date' field is empty.\nPlease input value.");
-      return;
+      return false;
     } else if (giftCatRef.current.value == "" || !giftCatRef.current.value) {
       alert("'Gift category' field is empty.\nPlease input value.");
-      return;
+      return false;
+    } else {
+      return true;
     }
   };
 
   async function AddNewGiftPost() {
-    const answer = window.confirm("Are you sure you want to add the post?");
-    if (!answer) {
-      return;
-    }
     if (!validateFields()) {
       return;
     }
+    const answer = window.confirm("Are you sure you want to add the post?");
+    if (!answer) {
+      return;
+    } else {
+      var ref = collection(db, "GiftPosts");
 
-    var ref = collection(db, "GiftPosts");
-
-    const docRef = await addDoc(ref, {
-      Created_At: serverTimestamp(),
-      Event_Type: eventType,
-      Event_Date: Timestamp.fromDate(new Date(eventDate)).toDate(),
-      Gift_Category: giftCategory,
-      Favorite_Brand: favoriteBrand,
-      Gift_URL: giftUrl,
-      Description: giftDescription,
-      User_ID: uid,
-      Email: email,
-      FullName: fullName,
-    })
-      .then(() => {
-        alert("Gift Post added successfully!");
-        window.location.reload();
+      const docRef = await addDoc(ref, {
+        Created_At: serverTimestamp(),
+        Event_Type: eventType,
+        Event_Date: Timestamp.fromDate(new Date(eventDate)).toDate(),
+        Gift_Category: giftCategory,
+        Favorite_Brand: favoriteBrand,
+        Gift_URL: giftUrl,
+        Description: giftDescription,
+        User_ID: uid,
+        Email: email,
+        FullName: fullName,
       })
-      .catch((error) => {
-        alert("Unsuccessful operation, error:", error);
-        window.location.reload();
-      });
+        .then(() => {
+          alert("Gift Post added successfully!");
+          window.location.reload();
+        })
+        .catch((error) => {
+          alert("Unsuccessful operation, error:", error);
+          window.location.reload();
+        });
+    }
   }
 
   //-------------------Return HTML-------------------//

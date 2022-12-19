@@ -32,6 +32,7 @@ const PostsPage = () => {
       return true;
     }
   };
+  
   useEffect(() => {
     const getAllPosts = async () => {
       const data = await getDocs(GiftPostsColleRef);

@@ -66,8 +66,6 @@ export function logout() {
 export function getCurrentUser() {
   const auth = getAuth();
   const user = auth.currentUser;
-  
-  console.log("🚀 - getCurrentUser - user:", user);
 
   return user;
 }
