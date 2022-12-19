@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Modal } from "react-bootstrap";
 import "./PostsPage.css";
 import { db } from "../../../firebase";
@@ -11,37 +11,38 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import {
+  FormControl,
+  Select,
+  MenuItem,
+  OutlinedInput,
+  TextField,
+} from "@mui/material";
+import { DateTimePicker } from "@mui/x-date-pickers";
+import { events, giftCategories } from "../../../Utils";
+import Textarea from "@mui/joy/Textarea";
 
-function CreatePostPopup(props) {
-  //   Input REFERENCES - useState
-  const [EventTypeBox, setNewEventType] = useState("");
-  const [EventDateBox, setNewEventDate] = useState("");
-  const [GiftCategoryBox, setNewGiftCategory] = useState("");
-  const [FavoriteBrandBox, setNewFavoriteBrand] = useState("");
-  const [GiftURLBox, setNewGiftURL] = useState("");
-  const [Text_AreaBox, setNewText_AreaID] = useState("");
-  const [fullName, setFullName] = useState("");
+const CreatePostPopup = (props) => {
+  const [eventType, setNewEventType] = useState("");
+  const [eventDate, setNewEventDate] = useState("");
+  const [giftCategory, setNewGiftCategory] = useState("");
+  const [favoriteBrand, setNewFavoriteBrand] = useState("");
+  const [giftUrl, setNewGiftURL] = useState("");
+  const [giftDescription, setGiftDescription] = useState("");
+  const [fullName, setFullName] = useState(""); //used to log the post's username
 
-  //-------------------ADDING POST TO THE DATABASE-------------------//
+  const eventTypeRef = useRef();
+  const eventDateRef = useRef();
+  const giftCatRef = useRef();
+  const favBrandRef = useRef();
+  const giftUrlRef = useRef();
+  const giftDescRef = useRef();
 
-  //   Inputs
-  //   let EventTypeBox = document.getElementById('EventTypebox');
-  //   let EventDateBox = document.getElementById('EventDatebox');
-  //   let GiftCategoryBox = document.getElementById('GiftCategorybox');
-  //   let FavoriteBrandBox = document.getElementById('FavoriteBrandbox');
-  //   let GiftURLBox = document.getElementById('GiftURLbox');
-  //   let Text_AreaBox = document.getElementById('Text_AreaIDbox');
-
-  //-------------------ADDING DOCUMENT-------------------//
-
-  //Add Document - Auto ID
   const auth = getAuth();
-  //2.The user object has basic properties such as display name, email, uid...
   const user = auth.currentUser;
   const uid = user.uid;
   const email = user.email;
 
-  //Get the current user full name
   const docRef = doc(db, "Users", uid);
   getDoc(docRef).then((docSnap) => {
     if (docSnap.exists()) {
@@ -51,26 +52,61 @@ function CreatePostPopup(props) {
     }
   });
 
-  async function AddDocument_AutoID() {
+  const clearFields = () => {
+    setNewEventType("");
+    setNewEventDate("");
+    setNewGiftCategory("");
+    setNewFavoriteBrand("");
+    setNewGiftURL("");
+    setGiftDescription("");
+  };
+
+  const validateFields = () => {
+    if (eventTypeRef.current.value == "" || !eventTypeRef.current.value) {
+      alert("'Event type' field is empty.\nPlease input value.");
+      return;
+    } else if (
+      eventDateRef.current.value == "" ||
+      !eventDateRef.current.value
+    ) {
+      alert("'Event date' field is empty.\nPlease input value.");
+      return;
+    } else if (giftCatRef.current.value == "" || !giftCatRef.current.value) {
+      alert("'Gift category' field is empty.\nPlease input value.");
+      return;
+    }
+  };
+
+  async function AddNewGiftPost() {
+    const answer = window.confirm("Are you sure you want to add the post?");
+    if (!answer) {
+      return;
+    }
+    if (!validateFields()) {
+      return;
+    }
+
     var ref = collection(db, "GiftPosts");
 
     const docRef = await addDoc(ref, {
       Created_At: serverTimestamp(),
-      Event_Type: EventTypeBox,
-      Event_Date: Timestamp.fromDate(new Date(EventDateBox)).toDate(),
-      Gift_Category: GiftCategoryBox,
-      Favorite_Brand: FavoriteBrandBox,
-      Gift_URL: GiftURLBox,
-      Description: Text_AreaBox,
+      Event_Type: eventType,
+      Event_Date: Timestamp.fromDate(new Date(eventDate)).toDate(),
+      Gift_Category: giftCategory,
+      Favorite_Brand: favoriteBrand,
+      Gift_URL: giftUrl,
+      Description: giftDescription,
       User_ID: uid,
       Email: email,
       FullName: fullName,
     })
       .then(() => {
         alert("Gift Post added successfully!");
+        window.location.reload();
       })
       .catch((error) => {
         alert("Unsuccessful operation, error:", error);
+        window.location.reload();
       });
   }
 
@@ -82,152 +118,147 @@ function CreatePostPopup(props) {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      class="createPostDialog"
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Create New Gift Post
+      <Modal.Header
+        closeButton
+        onClick={() => {
+          clearFields();
+        }}
+      >
+        <Modal.Title id="contained-modal-title-vcenter" class="dialogMainTitle">
+          <b>Create New Gift Post</b>
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body class="dialogContent">
         <h5>Fill The Following Fields:</h5>
         <div>
-          <div>
-            <label>Event type:</label>
-            <select
-              id="EventTypebox"
+          <div class="d-flex" style={{ marginTop: "20px" }}>
+            <TextField
               required
-              onChange={(event) => {
-                setNewEventType(event.target.value);
-              }}
+              style={{ marginLeft: "5px", marginRight: "5px" }}
+              inputRef={eventTypeRef}
+              select
+              size="medium"
+              value={eventType}
+              onChange={(event) => setNewEventType(event.target.value)}
+              variant="filled"
+              fullWidth
+              id="filled-basic"
+              label="Select event type"
             >
-              <option selected>Choose category:</option>
-              <option value="Birthday">Birthday</option>
-              <option value="Holiday">Holiday</option>
-              <option value="Anniversary">Anniversary</option>
-              <option value="Wedding">Wedding</option>
-              <option value="Bar/Bat Mitzvah">Bar/Bat Mitzvah</option>
-              <option value="Military enlistment">Military enlistment</option>
-              <option value="Release from army">Release from army</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
+              {events.map((event) => (
+                <MenuItem key={event.code} value={event.desc}>
+                  {event.desc}
+                </MenuItem>
+              ))}
+            </TextField>
 
-          <div>
-            <label>Event date:</label>
-            <input
-              id="EventDatebox"
-              type="date"
+            <TextField
               required
-              onChange={(event) => {
-                setNewEventDate(event.target.value);
-              }}
-            />
-          </div>
-
-          <div>
-            <label>Gift Category:</label>
-            <select
-              id="GiftCategorybox"
-              required
+              style={{ marginLeft: "5px", marginRight: "5px" }}
+              inputRef={giftCatRef}
+              select
+              size="medium"
+              value={giftCategory}
               onChange={(event) => {
                 setNewGiftCategory(event.target.value);
               }}
+              variant="filled"
+              fullWidth
+              label="Select gift category"
             >
-              <optgroup label="Fashion">
-                <option value="Fashion-Elegant">Elegant</option>
-                <option value="Fashion-Casual">Casual</option>
-                <option value="Fashion-Sporty">Sporty</option>
-                <option value="Fashion-Other">Fashion-Other</option>
-              </optgroup>
-
-              <optgroup label="Electronics">
-                <option value="Electronics-Gadgets">Gadgets</option>
-                <option value="Electronics-Video Games">Video Games</option>
-                <option value="Electronics-Smartphones">Smartphones</option>
-                <option value="Electronics-Other">Electronics-Other</option>
-              </optgroup>
-
-              <optgroup label="Home Products">
-                <option value="Home-Kitchen">Kitchen</option>
-                <option value="Home-Furniture">Furniture</option>
-                <option value="Home-Other">Home-Other</option>
-              </optgroup>
-
-              <optgroup label="Other Categories">
-                <option value="Other-Gift Card">Gift Card</option>
-                <option value="Other-Jewelry">Jewelry</option>
-                <option value="Other-Category">Other-Category</option>
-              </optgroup>
-            </select>
+              {giftCategories.map((category) => (
+                <MenuItem key={category.code} value={category.desc}>
+                  {category.desc}
+                </MenuItem>
+              ))}
+            </TextField>
           </div>
-
-          <div>
-            <label>Favorite brand:</label>
-            <input
-              id="FavoriteBrandbox"
-              type="text"
+          <div class="d-flex" style={{ marginTop: "20px" }}>
+            <TextField
               required
+              style={{ marginLeft: "5px", marginRight: "5px" }}
+              size="medium"
+              type="date"
+              fullWidth
+              variant="filled"
+              inputRef={eventDateRef}
+              onChange={(event) => {
+                setNewEventDate(event.target.value);
+              }}
+              value={eventDate}
+              helperText="Select event date"
+            />
+            <TextField
+              style={{ marginLeft: "5px", marginRight: "5px" }}
+              inputRef={favBrandRef}
+              size="medium"
+              value={favoriteBrand}
               onChange={(event) => {
                 setNewFavoriteBrand(event.target.value);
               }}
+              variant="filled"
+              fullWidth
+              label="Favorite Brand"
             />
-          </div>
-
-          <div>
-            <label>Direct link to the gift site:</label>
-            <input
-              id="GiftURLbox"
-              type="url"
-              required
+            <TextField
+              style={{ marginLeft: "5px", marginRight: "5px" }}
+              inputRef={giftUrlRef}
+              size="medium"
+              value={giftUrl}
               onChange={(event) => {
                 setNewGiftURL(event.target.value);
               }}
+              variant="filled"
+              fullWidth
+              label="Gift URL link"
             />
           </div>
 
           <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Description</span>
-            </div>
-            <textarea
-              id="Text_AreaIDbox"
-              class="form-control"
-              aria-label="With textarea"
-              placeholder="Here is the place to add more details (Favorite figure, sizes, colors, product model/version and more...)"
-              rows="5"
-              cols="50"
-              required
+            <Textarea
+              style={{ width: "100%", marginTop: "10px" }}
+              color="primary"
+              value={giftDescription}
+              inputRef={giftDescRef}
+              disabled={false}
+              minRows={3}
+              placeholder="Feel free, describe the gift you dream of"
+              size="md"
+              variant="outlined"
               onChange={(event) => {
-                setNewText_AreaID(event.target.value);
+                setGiftDescription(event.target.value);
               }}
-            ></textarea>
+            />
           </div>
-
-          {/* <textarea
-            id="Text_AreaIDbox"
-            name="message"
-            rows="5"
-            cols="50"
-            placeholder="Here is the place to add more details (Favorite figure, sizes, colors, product model/version and more...)"
-            required
-            onChange={(event) => {
-              setNewText_AreaID(event.target.value);
-            }}
-          ></textarea> */}
         </div>
-        <button
-          type="submit"
-          className="btn btn-outline-primary btn-block"
-          id="Submit"
-          onClick={() => {
-            AddDocument_AutoID();
-          }}
-        >
-          Submit
-        </button>
+        <div class="d-flex actionBtns align-items-center justify-content-center">
+          <button
+            style={{ margin: "20px 5px 0px 5px" }}
+            type="submit"
+            className="btn btn-primary"
+            onClick={() => {
+              AddNewGiftPost();
+              props.onPostCreated(false);
+            }}
+          >
+            Add Gift Post
+          </button>
+          <button
+            style={{ margin: "20px 5px 0px 5px" }}
+            type="button"
+            class="btn btn-danger"
+            onClick={() => {
+              clearFields();
+            }}
+          >
+            Clear Fields
+          </button>
+        </div>
       </Modal.Body>
     </Modal>
   );
-}
+};
 
 export default CreatePostPopup;

@@ -4,7 +4,7 @@ import { Accordion } from "react-bootstrap";
 
 const About = () => {
   return (
-    <div id="White_background">
+    <div class="customBackground">
       <div id="Main_Title">
         <b>About Us</b>
       </div>

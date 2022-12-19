@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { SxProps } from '@mui/system';
+import { OverridableStringUnion } from '@mui/types';
 import { OverridableComponent, OverrideProps } from '../OverridableComponent';
 import { Theme } from '../styles';
 import { FormHelperTextClasses } from './formHelperTextClasses';
+
+export interface FormHelperTextPropsVariantOverrides {}
 
 export interface FormHelperTextTypeMap<P = {}, D extends React.ElementType = 'p'> {
   props: P & {
@@ -48,7 +51,10 @@ export interface FormHelperTextTypeMap<P = {}, D extends React.ElementType = 'p'
     /**
      * The variant to use.
      */
-    variant?: 'standard' | 'outlined' | 'filled';
+    variant?: OverridableStringUnion<
+      'standard' | 'outlined' | 'filled',
+      FormHelperTextPropsVariantOverrides
+    >;
   };
   defaultComponent: D;
 }
@@ -56,11 +62,11 @@ export interface FormHelperTextTypeMap<P = {}, D extends React.ElementType = 'p'
  *
  * Demos:
  *
- * - [Text Fields](https://mui.com/components/text-fields/)
+ * - [Text Field](https://mui.com/material-ui/react-text-field/)
  *
  * API:
  *
- * - [FormHelperText API](https://mui.com/api/form-helper-text/)
+ * - [FormHelperText API](https://mui.com/material-ui/api/form-helper-text/)
  */
 declare const FormHelperText: OverridableComponent<FormHelperTextTypeMap>;
 

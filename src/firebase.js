@@ -10,7 +10,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { getFirestore } from "@firebase/firestore";
+import { getFirestore, deleteDoc, doc } from "@firebase/firestore";
 
 // My web app's Firebase configuration
 const firebaseConfig = {
@@ -73,6 +73,18 @@ export function useAuth() {
   }, []);
 
   return currentUser;
+}
+
+// deleteDoc
+export async function deleteDocument(collectionRef, docId) {
+  await deleteDoc(doc(db, collectionRef, docId))
+    .then(() => {
+      alert("The document was deleted successfully !");
+      window.location.reload();
+    })
+    .catch(() => {
+      alert("Failed to delete the document !");
+    });
 }
 
 // Storage

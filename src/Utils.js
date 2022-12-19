@@ -1,0 +1,25 @@
+export const events = [
+  { code: 1, desc: "Birthday" },
+  { code: 2, desc: "Holiday" },
+  { code: 3, desc: "Anniversary" },
+  { code: 4, desc: "Bar/Bat Mitzvah" },
+  { code: 5, desc: "Military enlistment" },
+  { code: 6, desc: "Release from army" },
+  { code: 7, desc: "Other" },
+];
+export const giftCategories = [
+  { code: 1, desc: "Elegant" },
+  { code: 2, desc: "Casual" },
+  { code: 3, desc: "Sporty" },
+  { code: 4, desc: "Fashion-Other" },
+  { code: 5, desc: "Gadgets" },
+  { code: 6, desc: "Video Games" },
+  { code: 7, desc: "Smartphones" },
+  { code: 8, desc: "Electronics-Other" },
+  { code: 9, desc: "Kitchen" },
+  { code: 10, desc: "Furniture" },
+  { code: 11, desc: "Home-Other" },
+  { code: 12, desc: "Gift Card" },
+  { code: 13, desc: "Jewelry" },
+  { code: 14, desc: "Other-Category" },
+];

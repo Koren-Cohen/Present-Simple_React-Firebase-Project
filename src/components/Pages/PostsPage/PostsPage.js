@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { db } from "../../../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { db, deleteDocument } from "../../../firebase";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import moment from "moment";
 import "./PostsPage.css";
 import { Row, Col, Container, Button } from "react-bootstrap";
@@ -12,66 +12,106 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const PostsPage = () => {
   const [modalShow, setModalShow] = useState(false);
   const [allPosts, setPosts] = useState([]);
+
   //imports the 'GiftPosts' collection from the firestore db
-  const PostsCollectionRef = collection(db, "GiftPosts");
+  const GiftPostsColleRef = collection(db, "GiftPosts");
+
+  function handleChange() {
+    setModalShow(false);
+  }
+
+  function deletePost(docId) {
+    const answer = window.confirm("Are you sure you want to delete this post?");
+    if (!answer) {
+      return;
+    }
+    deleteDocument("GiftPosts", docId);
+  }
 
   useEffect(() => {
     const getAllPosts = async () => {
-      const data = await getDocs(PostsCollectionRef);
+      const data = await getDocs(GiftPostsColleRef);
       setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
-
     getAllPosts();
   }, []);
 
   return (
     <div>
-      <div id="Main_Title">
-        <i id="Main_Title_Icon" className="fas fa-info-circle"></i>{" "}
+      <div class="mainTitle">
         <b>Gift Post's</b>
       </div>
 
-      <div id="NewPostPopupBtn">
+      <div class="newPostPopupBtn">
+        <p>What is the next gift you would like to receive?</p>
         <Button variant="info btn-block" onClick={() => setModalShow(true)}>
-          What is the next gift you would like to receive? Share Now
+          Share Now
         </Button>
         {/* Popup dialog element: */}
-        <CreatePostPopup show={modalShow} onHide={() => setModalShow(false)} />
+        <CreatePostPopup
+          onPostCreated={() => handleChange()}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
       </div>
 
-      {/* Show all the posts list  */}
-      {allPosts.map((post) => {
-        return (
-          <div id="post-card">
-            <div id="img-box">
-              <img src="./images/Avatar.jpg" width="200" height="200" />
-            </div>
-            <div id="form-box">
-              {" "}
-              <h5 class="card-title">
-                <b>{post.FullName}'s Event: </b>
+      <div style={{ flexWrap: "wrap" }} class="d-flex justify-content-center">
+        {/* Show all the posts list  */}
+        {allPosts.map((post) => {
+          return (
+            <div class="mx-3 position-relative postCard" key={post.id}>
+              <div class="postCardContent">
+                <div class="d-flex">
+                  <img
+                    style={{ borderRadius: "50%" }}
+                    src="./images/Avatar.jpg"
+                    width="10%"
+                    height="10%"
+                  />
+
+                  <h5
+                    class="postTitle"
+                    style={{ marginLeft: "3%", marginTop: "5px" }}
+                  >
+                    <b>{post.FullName}</b>
+                  </h5>
+                  <button
+                    type="button"
+                    onClick={() => deletePost(post.id)}
+                    class="btn btn-outline-danger btn-sm position-absolute top-0 end-0" /*onClick={handleLogout}*/
+                    style={{ margin: "3%" }}
+                  >
+                    <FontAwesomeIcon icon={faTrashAlt} />
+                  </button>
+                </div>
+                <div class="dropdown-divider"></div>
+
+                <b>Event: </b>
                 {post.Event_Type}
-              </h5>
-              <div id="form-row">
-                {" "}
-                <b>Event Date: </b>
-                {moment(post.Event_Date.toDate()).format("ll")}
-              </div>
-              <div id="form-row">
-                {" "}
-                <b>Gift Category: </b> {post.Gift_Category}
-              </div>
-              <div id="form-row">
-                <b>Favorite Brand: </b>
-                {post.Favorite_Brand}
-              </div>
-              <div id="form-row">
-                <b>Gift URL: </b>
-                {post.Gift_URL}
-              </div>
-              <div id="form-row">
-                <b>Gift Description: </b>
-                {post.Description}
+                <div>
+                  {" "}
+                  <div class="form-row">
+                    {" "}
+                    <b>When ? </b>
+                    {moment(post.Event_Date.toDate()).format("ll")}
+                  </div>
+                  <div class="form-row">
+                    {" "}
+                    <b>Gift Category: </b> {post.Gift_Category}
+                  </div>
+                  <div class="form-row">
+                    <b>Favorite Brand: </b>
+                    {post.Favorite_Brand}
+                  </div>
+                  <div class="form-row">
+                    <b>Gift URL: </b>
+                    {post.Gift_URL}
+                  </div>
+                  <div class="form-row">
+                    <b>Gift Description: </b>
+                    {post.Description}
+                  </div>
+                </div>
               </div>
               <div class="card-footer">
                 <small class="text-muted">
@@ -80,19 +120,9 @@ const PostsPage = () => {
                 </small>
               </div>
             </div>
-            <div id="deleteBtn">
-              <button
-                type="button"
-                class="btn btn-outline-danger" /*onClick={handleLogout}*/
-              >
-                {/* !currentUser - means when the user connected */}
-                {/* currentUser - means when the user disconnected */}
-                <FontAwesomeIcon icon={faTrashAlt} />
-              </button>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };
