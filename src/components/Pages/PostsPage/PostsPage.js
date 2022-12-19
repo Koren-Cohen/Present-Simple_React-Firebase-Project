@@ -32,7 +32,7 @@ const PostsPage = () => {
       return true;
     }
   };
-  
+
   useEffect(() => {
     const getAllPosts = async () => {
       const data = await getDocs(GiftPostsColleRef);
@@ -123,9 +123,28 @@ const PostsPage = () => {
                 </div>
               </div>
               <div class="card-footer">
-                <small class="text-muted">
-                  Post created at:{" "}
-                  {moment(post.Created_At.toDate()).format("lll")}
+                <small class="text-muted d-flex position-relative">
+                  <div>
+                    Post created at:{" "}
+                    {moment(post.Created_At.toDate()).format("lll")}
+                  </div>
+                  <div class="position-absolute top-50 end-0 translate-middle-y">
+                    {post.PublishPlatform == "Web" ? (
+                      <img
+                        style={{ borderRadius: "50%" }}
+                        src="./images/webFav.png"
+                        width="20px"
+                        height="20px"
+                      />
+                    ) : (
+                      <img
+                        style={{ borderRadius: "50%" }}
+                        src="./images/androidFav.png"
+                        width="20px"
+                        height="20px"
+                      />
+                    )}
+                  </div>
                 </small>
               </div>
             </div>

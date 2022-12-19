@@ -100,6 +100,7 @@ const CreatePostPopup = (props) => {
         User_ID: uid,
         Email: email,
         FullName: fullName,
+        PublishPlatform: "Web",
       })
         .then(() => {
           alert("Gift Post added successfully!");
