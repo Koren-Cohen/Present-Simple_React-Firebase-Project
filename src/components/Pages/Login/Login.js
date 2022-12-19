@@ -29,7 +29,7 @@ const Login = () => {
   }
 
   return (
-    <div id="White_background">
+    <div class="customBackground">
       <p id="Main_Title" className="font-effect-shadow-multiple">
         <b>Login</b>
       </p>

@@ -8,7 +8,7 @@ Soft blue #e4edfa
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
 
-#White_background {
+.customBackground {
   margin-top: 0px;
   margin-left: 300px;
   margin-right: 300px;

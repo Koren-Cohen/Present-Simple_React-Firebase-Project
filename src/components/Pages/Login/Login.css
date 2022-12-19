@@ -6,20 +6,20 @@ Mid blue #7DA2E0
 Soft blue #e4edfa 
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap");
 
-#White_background {
+.customBackground {
   margin-top: 0px;
   margin-left: 300px;
-  margin-right: 300px;  padding: 50px 100px; /*top-bottom right-left*/
+  margin-right: 300px;
+  padding: 50px 100px; /*top-bottom right-left*/
   text-align: start;
-  border-radius:0px 0px 15px 15px;
+  border-radius: 0px 0px 15px 15px;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
 }
 
 #Main_Title {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   text-align: center;
   color: #00297a;
   font-size: 50px;

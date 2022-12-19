@@ -63,6 +63,15 @@ export function logout() {
   return signOut(auth);
 }
 
+export function getCurrentUser() {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  
+  console.log("🚀 - getCurrentUser - user:", user);
+
+  return user;
+}
+
 // Custom Hook
 export function useAuth() {
   const [currentUser, setCurrentUser] = useState();

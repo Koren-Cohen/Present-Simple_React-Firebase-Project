@@ -105,7 +105,7 @@ const SignUp = () => {
   };
 
   return (
-    <div id="White_background">
+    <div class="customBackground">
       <p id="Main_Title" className="font-effect-shadow-multiple">
         <i id="Main_Title_Icon" class="fas fa-user-plus"></i>
         <b>Registration</b>

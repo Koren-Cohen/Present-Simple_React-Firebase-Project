@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { db, deleteDocument } from "../../../firebase";
+import { db, deleteDocument, getCurrentUser } from "../../../firebase";
 import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import moment from "moment";
 import "./PostsPage.css";
@@ -11,14 +11,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const PostsPage = () => {
   const [modalShow, setModalShow] = useState(false);
+  const [deleteBtn, setDeleteBtn] = useState("");
   const [allPosts, setPosts] = useState([]);
 
   //imports the 'GiftPosts' collection from the firestore db
   const GiftPostsColleRef = collection(db, "GiftPosts");
-
-  function handleChange() {
-    setModalShow(false);
-  }
 
   function deletePost(docId) {
     const answer = window.confirm("Are you sure you want to delete this post?");
@@ -28,6 +25,13 @@ const PostsPage = () => {
     deleteDocument("GiftPosts", docId);
   }
 
+  const deleteBtnPrem = (post) => {
+    const user = getCurrentUser();
+
+    if (user.uid == post.User_ID) {
+      return true;
+    }
+  };
   useEffect(() => {
     const getAllPosts = async () => {
       const data = await getDocs(GiftPostsColleRef);
@@ -49,7 +53,7 @@ const PostsPage = () => {
         </Button>
         {/* Popup dialog element: */}
         <CreatePostPopup
-          onPostCreated={() => handleChange()}
+          onPostCreated={() => setModalShow(false)}
           show={modalShow}
           onHide={() => setModalShow(false)}
         />
@@ -68,21 +72,25 @@ const PostsPage = () => {
                     width="10%"
                     height="10%"
                   />
-
                   <h5
                     class="postTitle"
                     style={{ marginLeft: "3%", marginTop: "5px" }}
                   >
                     <b>{post.FullName}</b>
                   </h5>
-                  <button
-                    type="button"
-                    onClick={() => deletePost(post.id)}
-                    class="btn btn-outline-danger btn-sm position-absolute top-0 end-0" /*onClick={handleLogout}*/
-                    style={{ margin: "3%" }}
-                  >
-                    <FontAwesomeIcon icon={faTrashAlt} />
-                  </button>
+
+                  <div>
+                    {deleteBtnPrem(post) ? (
+                      <button
+                        type="button"
+                        onClick={() => deletePost(post.id)}
+                        class="btn btn-outline-danger btn-sm position-absolute top-0 end-0" /*onClick={handleLogout}*/
+                        style={{ margin: "3%" }}
+                      >
+                        <FontAwesomeIcon icon={faTrashAlt} />
+                      </button>
+                    ) : null}
+                  </div>
                 </div>
                 <div class="dropdown-divider"></div>
 
