@@ -75,14 +75,15 @@ export async function getUserData() {
 
   const docRef = doc(db, "Users", user.uid);
   const docSnap = await getDoc(docRef);
-
-  if (docSnap.exists()) {
-    console.log("Document data:", docSnap.data());
-    return docSnap.data();
-  } else {
-    // doc.data() will be undefined in this case
-    console.log("No such document!");
-  }
+  
+  return docSnap.data()
+  // if (docSnap.exists()) {
+  //   console.log("Document data:", docSnap.data());
+  //   return docSnap.data();
+  // } else {
+  //   // doc.data() will be undefined in this case
+  //   console.log("No such document!");
+  // }
 }
 
 // Custom Hook
