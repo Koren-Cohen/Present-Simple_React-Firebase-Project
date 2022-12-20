@@ -10,7 +10,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { getFirestore, deleteDoc, doc } from "@firebase/firestore";
+import { getFirestore, deleteDoc, doc, getDoc } from "@firebase/firestore";
 
 // My web app's Firebase configuration
 const firebaseConfig = {
