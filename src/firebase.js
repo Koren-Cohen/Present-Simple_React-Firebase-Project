@@ -63,11 +63,26 @@ export function logout() {
   return signOut(auth);
 }
 
-export function getCurrentUser() {
+export function getLoggedInUser() {
   const auth = getAuth();
   const user = auth.currentUser;
 
   return user;
+}
+
+export async function getUserData() {
+  const user = getLoggedInUser();
+
+  const docRef = doc(db, "Users", user.uid);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+    return docSnap.data();
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
 }
 
 // Custom Hook

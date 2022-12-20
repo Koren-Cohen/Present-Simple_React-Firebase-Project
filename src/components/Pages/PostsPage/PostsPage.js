@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { db, deleteDocument, getCurrentUser } from "../../../firebase";
+import { db, deleteDocument, getLoggedInUser } from "../../../firebase";
 import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import moment from "moment";
 import "./PostsPage.css";
@@ -26,7 +26,7 @@ const PostsPage = () => {
   }
 
   const deleteBtnPrem = (post) => {
-    const user = getCurrentUser();
+    const user = getLoggedInUser();
 
     if (user.uid == post.User_ID) {
       return true;
