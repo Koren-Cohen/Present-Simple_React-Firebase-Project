@@ -13,6 +13,7 @@ import { useAuth } from "./firebase";
 
 const App = () => {
   const currentUser = useAuth(); //Uses authentication in all app pages and routers.
+  console.log("🚀 - App - currentUser", currentUser);
 
   return (
     <Router>

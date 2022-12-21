@@ -31,36 +31,51 @@ const storage = getStorage();
 export const db = getFirestore(app);
 
 //Sign up function using: createUserWithEmailAndPassword
-export function signup(email, password) {
-  return createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log(user);
-    })
-    .catch((error) => {
-      alert(
-        "Error Code: " + error.code + "\nError message: '" + error.message + "'"
-      );
-    });
+export async function signup(email, password) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+    console.log("🚀 - signup - user", user);
+  } catch (error) {
+    alert(
+      "Error Code: " + error.code + "\nError message: '" + error.message + "'"
+    );
+  }
 }
 
 //Login function using: signInWithEmailAndPassword
-export function login(email, password) {
-  return signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log(user);
-    })
-    .catch((error) => {
-      alert(
-        "Error Code: " + error.code + "\nError message: '" + error.message + "'"
-      );
-    });
+export async function login(email, password) {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const userAuth = userCredential.user;
+    localStorage.setItem("User Auth", JSON.stringify(userAuth));
+
+    const userData = await getUserData();
+    localStorage.setItem("User Data", JSON.stringify(userData));
+  } catch (error) {
+    alert(
+      "Error Code: " + error.code + "\nError message: '" + error.message + "'"
+    );
+  }
 }
 
 //Logout function using: signOut
-export function logout() {
-  return signOut(auth);
+export async function logout() {
+  try {
+    await signOut(auth);
+    localStorage.removeItem("User Auth");
+    localStorage.removeItem("User Data");
+  } catch (error) {
+    console.log("🚀 - logout - error", error);
+  }
 }
 
 export function getLoggedInUser() {
@@ -78,14 +93,13 @@ export async function getUserData() {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
       return docSnap.data();
     } else {
       // doc.data() will be undefined in this case
       console.log("No such document!");
     }
   } catch (error) {
-    console.log("🚀 - getUserData - error", error);
+    console.log("Error while tring to get doc data from firestore:", error);
   }
 }
 

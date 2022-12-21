@@ -11,8 +11,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const PostsPage = () => {
   const [modalShow, setModalShow] = useState(false);
-  const [deleteBtn, setDeleteBtn] = useState("");
+  const [userData, setUserData] = useState({
+    fullName: "",
+    email: "",
+    dateOfBirth: "",
+    createdAt: "",
+    isAdmin: "",
+    joinPlatform: "",
+    user_ID: "",
+  });
   const [allPosts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const getAllPosts = async () => {
+      const data = await getDocs(GiftPostsColleRef);
+      setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getAllPosts();
+
+    const userDoc = localStorage.getItem("User Data");
+    var userDataObj = JSON.parse(userDoc);
+
+    setUserData(userDataObj);
+    console.log("🚀 - PostsPage - userData", userData);
+  }, []);
 
   //imports the 'GiftPosts' collection from the firestore db
   const GiftPostsColleRef = collection(db, "GiftPosts");
@@ -27,19 +49,14 @@ const PostsPage = () => {
 
   const deleteBtnPrem = (post) => {
     const user = getLoggedInUser();
-
-    if (user.uid == post.User_ID) {
+    if (userData.isAdmin) {
       return true;
+    } else if (user.uid == post.User_ID) {
+      return true;
+    } else {
+      return false;
     }
   };
-
-  useEffect(() => {
-    const getAllPosts = async () => {
-      const data = await getDocs(GiftPostsColleRef);
-      setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getAllPosts();
-  }, []);
 
   return (
     <div>
