@@ -2,25 +2,26 @@ import { db, getUserData } from "../../../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import moment from "moment";
-import { getAuth, updateProfile, deleteUser } from "firebase/auth";
-import { Row, Col, Container, Button } from "react-bootstrap";
+import { getAuth } from "firebase/auth";
+import { Button } from "react-bootstrap";
 import CreatePostPopup from "../PostsPage/CreatePostPopup";
-import { useId } from "react";
 
 export default function Profile() {
   //The CreatePostPopup() useState
   const [modalShow, setModalShow] = useState(false);
   const [userData, setUserData] = useState({});
 
-  useEffect(() => {
-    getUserData().then((callBack) => setUserData(callBack));
-    console.log("🚀 - Profile - userData", userData);
-  }, {});
+  useEffect(async () => {
+    try {
+      setUserData(await getUserData());
+    } catch (error) {
+      console.log("🚀 - useEffect - error", error);
+    }
+  }, []);
 
   // Get the currentUser details
   const auth = getAuth();
   const user = auth.currentUser;
-  const displayName = user.displayName;
   const email = user.email;
   const uid = user.uid;
 
@@ -34,7 +35,7 @@ export default function Profile() {
 
   getDoc(docRef).then((docSnap) => {
     if (docSnap.exists()) {
-      setUsersFullName(docSnap.data().fullName);
+      setUsersFullName(userData.fullName);
       setUsersDateOfBirth(
         moment(docSnap.data().dateOfBirth.toDate()).format("LL")
       );

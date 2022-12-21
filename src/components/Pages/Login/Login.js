@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import "./Login.css";
-import { login, useAuth } from "../../../firebase";
+import { login, useAuth, getLoggedInUser } from "../../../firebase";
 import { Link } from "react-router-dom";
 // Font Awesome Source
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +18,7 @@ const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  async function handleLogin() {
+  const handleLogin = async () => {
     setLoading(true);
     try {
       await login(emailRef.current.value, passwordRef.current.value);
@@ -26,7 +26,7 @@ const Login = () => {
       alert("Incorrect password or email !");
     }
     setLoading(false);
-  }
+  };
 
   return (
     <div class="customBackground">
