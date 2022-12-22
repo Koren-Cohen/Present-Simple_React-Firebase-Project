@@ -11,14 +11,7 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import {
-  FormControl,
-  Select,
-  MenuItem,
-  OutlinedInput,
-  TextField,
-} from "@mui/material";
-import { DateTimePicker } from "@mui/x-date-pickers";
+import { MenuItem, TextField } from "@mui/material";
 import { events, giftCategories } from "../../../Utils";
 import Textarea from "@mui/joy/Textarea";
 
@@ -123,12 +116,7 @@ const CreatePostPopup = (props) => {
       centered
       class="createPostDialog"
     >
-      <Modal.Header
-        closeButton
-        onClick={() => {
-          clearFields();
-        }}
-      >
+      <Modal.Header closeButton onClick={clearFields}>
         <Modal.Title id="contained-modal-title-vcenter" class="dialogMainTitle">
           <b>Create New Gift Post</b>
         </Modal.Title>
@@ -243,7 +231,6 @@ const CreatePostPopup = (props) => {
             className="btn btn-primary"
             onClick={() => {
               AddNewGiftPost();
-              props.onPostCreated(false);
             }}
           >
             Add Gift Post

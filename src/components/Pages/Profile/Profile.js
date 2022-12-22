@@ -5,8 +5,14 @@ import moment from "moment";
 import { getAuth } from "firebase/auth";
 import { Button } from "react-bootstrap";
 import CreatePostPopup from "../PostsPage/CreatePostPopup";
-import { Router, Switch, Route } from "react-router-dom";
-import About from "../About/About";
+import IconButton from "@mui/material/IconButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faShareSquare,
+  faUserEdit,
+  faUsersSlash,
+} from "@fortawesome/free-solid-svg-icons";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function Profile() {
   //The CreatePostPopup() useState
@@ -82,42 +88,44 @@ export default function Profile() {
                   </div>
                 </div>
                 {/* Left Bottom box - Profile actions*/}
-                <div class="card mt-3">
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <h5>Account Actions:</h5>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <Button
-                        variant="btn btn-outline-info btn-block"
-                        onClick={() => setModalShow(true)}
-                      >
-                        Share Post
-                      </Button>{" "}
-                      <CreatePostPopup
-                        show={modalShow}
-                        onHide={() => setModalShow(false)}
-                      />
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <Button variant="btn btn-outline-primary btn-block">
-                        Edit Profile
-                      </Button>{" "}
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <Button variant="btn btn-outline-warning btn-block">
-                        Change Password
-                      </Button>{" "}
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <Button
-                        variant="btn btn-outline-danger btn-block"
+                <div class="card mt-3" style={{ padding: "10px 0px" }}>
+                  <div
+                    class="d-flex"
+                    style={{
+                      justifyContent: "space-evenly",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div>Account Actions:</div>
+                    <Tooltip
+                      title="Share post"
+                      placement="top"
+                      onClick={() => setModalShow(true)}
+                      arrow
+                    >
+                      <IconButton size="small" color="success">
+                        <FontAwesomeIcon icon={faShareSquare} />
+                      </IconButton>
+                    </Tooltip>
+                    <CreatePostPopup
+                      show={modalShow}
+                      onHide={() => setModalShow(false)}
+                    />
+                    <Tooltip title="Edit profile" placement="top" arrow>
+                      <IconButton color="primary" size="small">
+                        <FontAwesomeIcon icon={faUserEdit} />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete user" placement="top" arrow>
+                      <IconButton
+                        color="error"
+                        size="small"
                         onClick={handleDeleteUser}
                       >
-                        Delete User
-                      </Button>
-                    </li>
-                  </ul>
+                        <FontAwesomeIcon icon={faUsersSlash} />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
                 </div>
               </div>
 

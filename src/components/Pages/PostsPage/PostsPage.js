@@ -72,7 +72,6 @@ const PostsPage = () => {
           </Button>
           {/* Popup dialog element: */}
           <CreatePostPopup
-            onPostCreated={() => setModalShow(false)}
             show={modalShow}
             onHide={() => setModalShow(false)}
           />
@@ -168,7 +167,9 @@ const PostsPage = () => {
             );
           })}
         </div>
-        <p style={{marginTop:"30px"}} id="copyright">Ⓒ Present Simple - Developed by Koren Cohen</p>
+        <p style={{ marginTop: "30px" }} id="copyright">
+          Ⓒ Present Simple - Developed by Koren Cohen
+        </p>
       </div>
     </div>
   );

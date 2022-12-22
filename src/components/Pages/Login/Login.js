@@ -33,7 +33,7 @@ const Login = () => {
         <p>
           <FontAwesomeIcon icon={faAt} />
           &nbsp;
-          <label for="exampleInputEmail1">Email address</label>
+          <label>Email address</label>
           <input
             type="email"
             className="form-control"

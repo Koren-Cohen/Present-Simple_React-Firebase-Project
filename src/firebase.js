@@ -124,7 +124,9 @@ export async function logout() {
     localStorage.removeItem("User Data");
     return <Link to="/" />;
   } catch (error) {
-    console.log("🚀 - logout - error", error);
+    alert(
+      "Error Code: " + error.code + "\nError message: '" + error.message + "'"
+    );
   }
 }
 
@@ -149,7 +151,9 @@ export async function getUserData() {
       console.log("No such document!");
     }
   } catch (error) {
-    console.log("Error while tring to get doc data from firestore:", error);
+    alert(
+      "Error Code: " + error.code + "\nError message: '" + error.message + "'"
+    );
   }
 }
 
@@ -189,7 +193,9 @@ export async function deleteUserFirebase() {
       window.location.assign("/");
     });
   } catch (error) {
-    console.log("🚀 - deleteUser - error", error);
+    alert(
+      "Error Code: " + error.code + "\nError message: '" + error.message + "'"
+    );
   }
 }
 

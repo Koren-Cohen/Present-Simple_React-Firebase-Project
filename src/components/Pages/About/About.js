@@ -12,7 +12,7 @@ const About = () => {
         There is two sides: The Buyer side & The gift receiver side.
       </p>
 
-      <p>
+      <div>
         <b>The Buyer side:</b>
         <br />
         Benefits of the gift buyer:
@@ -41,8 +41,8 @@ const About = () => {
           src="./images/Buying_Gift.jpg"
           id="Center_Photo"
         />
-      </p>
-      <p>
+      </div>
+      <div>
         <b>The gift receiver side:</b>
         <br />
         For those who receive the gift, these are the following benefits:
@@ -81,7 +81,7 @@ const About = () => {
           src="./images/Receive_Gift.jpg"
           id="Center_Photo"
         />
-      </p>
+      </div>
       <p id="copyright">
         Ⓒ Present <i className="far fa-arrow-alt-circle-right"></i> Simple -
         Developed by Koren Cohen
