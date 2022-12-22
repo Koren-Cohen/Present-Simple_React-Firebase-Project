@@ -13,6 +13,38 @@
   background-color: var(--midBlue);
 }
 
+.postsContainer {
+  margin: 0 100px 50px;
+  background-color: var(--softBlue);
+  padding: 15px 0px;
+  border-radius: 0px 0px 15px 15px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  background-image: radial-gradient(
+      circle at 10% 26%,
+      rgba(90, 90, 90, 0.06) 0%,
+      rgba(90, 90, 90, 0.06) 25%,
+      rgba(137, 137, 137, 0.06) 25%,
+      rgba(137, 137, 137, 0.06) 50%,
+      rgba(185, 185, 185, 0.06) 50%,
+      rgba(185, 185, 185, 0.06) 75%,
+      rgba(232, 232, 232, 0.06) 75%,
+      rgba(232, 232, 232, 0.06) 100%
+    ),
+    radial-gradient(
+      circle at 46% 66%,
+      rgba(171, 171, 171, 0.06) 0%,
+      rgba(171, 171, 171, 0.06) 25%,
+      rgba(128, 128, 128, 0.06) 25%,
+      rgba(128, 128, 128, 0.06) 50%,
+      rgba(84, 84, 84, 0.06) 50%,
+      rgba(84, 84, 84, 0.06) 75%,
+      rgba(41, 41, 41, 0.06) 75%,
+      rgba(41, 41, 41, 0.06) 100%
+    ),
+    linear-gradient(90deg, rgb(228, 237, 250), rgb(228, 237, 250));
+}
+
 .post {
   max-width: 540px;
 }
@@ -64,16 +96,16 @@ label {
 .postCard {
   /*card sizes*/
   height: 20%;
-  width: 20%;
+  width: 22%;
   font-size: 15px;
 
   color: var(--darkBlue);
 
   /*card background color*/
-  background-color: #e4edfa;
+  background-color: #ebf1fa;
   border-radius: 8px;
 
-  margin-top: 1%;
+  margin: 15px;
 
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

@@ -54,10 +54,7 @@ export default function Profile() {
     if (!answer) {
       return;
     }
-    const res = await deleteUserFirebase();
-    if (res) {
-      return res;
-    }
+    await deleteUserFirebase();
   };
 
   return (

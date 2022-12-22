@@ -60,113 +60,115 @@ const PostsPage = () => {
 
   return (
     <div>
-      <div class="mainTitle">
-        <b>Gift Post's</b>
-      </div>
+      <div class="postsContainer">
+        <div class="mainTitle">
+          <b>Gift Post's</b>
+        </div>
 
-      <div class="newPostPopupBtn">
-        <p>What is the next gift you would like to receive?</p>
-        <Button variant="info btn-block" onClick={() => setModalShow(true)}>
-          Share Now
-        </Button>
-        {/* Popup dialog element: */}
-        <CreatePostPopup
-          onPostCreated={() => setModalShow(false)}
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-        />
-      </div>
+        <div class="newPostPopupBtn">
+          <p>What is the next gift you would like to receive?</p>
+          <Button variant="info btn-block" onClick={() => setModalShow(true)}>
+            Share Now
+          </Button>
+          {/* Popup dialog element: */}
+          <CreatePostPopup
+            onPostCreated={() => setModalShow(false)}
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+          />
+        </div>
+        <div style={{ flexWrap: "wrap" }} class="d-flex justify-content-center">
+          {/* Show all the posts list  */}
+          {allPosts.map((post) => {
+            return (
+              <div class="position-relative postCard" key={post.id}>
+                <div class="postCardContent">
+                  <div class="d-flex">
+                    <img
+                      style={{ borderRadius: "50%" }}
+                      src="./images/Avatar.jpg"
+                      width="10%"
+                      height="10%"
+                    />
+                    <h5
+                      class="postTitle"
+                      style={{ marginLeft: "3%", marginTop: "5px" }}
+                    >
+                      <b>{post.FullName}</b>
+                    </h5>
 
-      <div style={{ flexWrap: "wrap" }} class="d-flex justify-content-center">
-        {/* Show all the posts list  */}
-        {allPosts.map((post) => {
-          return (
-            <div class="mx-3 position-relative postCard" key={post.id}>
-              <div class="postCardContent">
-                <div class="d-flex">
-                  <img
-                    style={{ borderRadius: "50%" }}
-                    src="./images/Avatar.jpg"
-                    width="10%"
-                    height="10%"
-                  />
-                  <h5
-                    class="postTitle"
-                    style={{ marginLeft: "3%", marginTop: "5px" }}
-                  >
-                    <b>{post.FullName}</b>
-                  </h5>
+                    <div>
+                      {deleteBtnPrem(post) ? (
+                        <button
+                          type="button"
+                          onClick={() => deletePost(post.id)}
+                          class="btn btn-outline-danger btn-sm position-absolute top-0 end-0" /*onClick={handleLogout}*/
+                          style={{ margin: "3%" }}
+                        >
+                          <FontAwesomeIcon icon={faTrashAlt} />
+                        </button>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div class="dropdown-divider"></div>
 
+                  <b>Event: </b>
+                  {post.Event_Type}
                   <div>
-                    {deleteBtnPrem(post) ? (
-                      <button
-                        type="button"
-                        onClick={() => deletePost(post.id)}
-                        class="btn btn-outline-danger btn-sm position-absolute top-0 end-0" /*onClick={handleLogout}*/
-                        style={{ margin: "3%" }}
-                      >
-                        <FontAwesomeIcon icon={faTrashAlt} />
-                      </button>
-                    ) : null}
+                    {" "}
+                    <div class="form-row">
+                      {" "}
+                      <b>When ? </b>
+                      {moment(post.Event_Date.toDate()).format("ll")}
+                    </div>
+                    <div class="form-row">
+                      {" "}
+                      <b>Gift Category: </b> {post.Gift_Category}
+                    </div>
+                    <div class="form-row">
+                      <b>Favorite Brand: </b>
+                      {post.Favorite_Brand}
+                    </div>
+                    <div class="form-row">
+                      <b>Gift URL: </b>
+                      {post.Gift_URL}
+                    </div>
+                    <div class="form-row">
+                      <b>Gift Description: </b>
+                      {post.Description}
+                    </div>
                   </div>
                 </div>
-                <div class="dropdown-divider"></div>
-
-                <b>Event: </b>
-                {post.Event_Type}
-                <div>
-                  {" "}
-                  <div class="form-row">
-                    {" "}
-                    <b>When ? </b>
-                    {moment(post.Event_Date.toDate()).format("ll")}
-                  </div>
-                  <div class="form-row">
-                    {" "}
-                    <b>Gift Category: </b> {post.Gift_Category}
-                  </div>
-                  <div class="form-row">
-                    <b>Favorite Brand: </b>
-                    {post.Favorite_Brand}
-                  </div>
-                  <div class="form-row">
-                    <b>Gift URL: </b>
-                    {post.Gift_URL}
-                  </div>
-                  <div class="form-row">
-                    <b>Gift Description: </b>
-                    {post.Description}
-                  </div>
+                <div class="card-footer">
+                  <small class="text-muted d-flex position-relative">
+                    <div>
+                      Post created at:{" "}
+                      {moment(post.Created_At.toDate()).format("lll")}
+                    </div>
+                    <div class="position-absolute top-50 end-0 translate-middle-y">
+                      {post.PublishPlatform == "Web" ? (
+                        <img
+                          style={{ borderRadius: "50%" }}
+                          src="./images/webFav.png"
+                          width="20px"
+                          height="20px"
+                        />
+                      ) : (
+                        <img
+                          style={{ borderRadius: "50%" }}
+                          src="./images/androidFav.png"
+                          width="20px"
+                          height="20px"
+                        />
+                      )}
+                    </div>
+                  </small>
                 </div>
               </div>
-              <div class="card-footer">
-                <small class="text-muted d-flex position-relative">
-                  <div>
-                    Post created at:{" "}
-                    {moment(post.Created_At.toDate()).format("lll")}
-                  </div>
-                  <div class="position-absolute top-50 end-0 translate-middle-y">
-                    {post.PublishPlatform == "Web" ? (
-                      <img
-                        style={{ borderRadius: "50%" }}
-                        src="./images/webFav.png"
-                        width="20px"
-                        height="20px"
-                      />
-                    ) : (
-                      <img
-                        style={{ borderRadius: "50%" }}
-                        src="./images/androidFav.png"
-                        width="20px"
-                        height="20px"
-                      />
-                    )}
-                  </div>
-                </small>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+        <p style={{marginTop:"30px"}} id="copyright">Ⓒ Present Simple - Developed by Koren Cohen</p>
       </div>
     </div>
   );

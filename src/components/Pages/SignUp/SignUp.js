@@ -9,15 +9,12 @@ import {
 import { useRef, useState } from "react";
 import "./SignUp.css";
 import { Form } from "react-bootstrap";
-import { useAuth, db } from "../../../firebase";
-import { setDoc, serverTimestamp, Timestamp, doc } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { Link } from "react-router-dom";
+import { useAuth, creatUserAndUserDoc } from "../../../firebase";
 
 const SignUp = () => {
-  const [newName, setNewName] = useState("");
-  const [newDate, setNewDate] = useState("");
-  const [newEmail, setNewEmail] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [email, setEmail] = useState("");
 
   const [loading, setLoading] = useState(false);
   const currentUser = useAuth();
@@ -28,7 +25,6 @@ const SignUp = () => {
   const passwordRef = useRef();
   const passwordConfRef = useRef();
 
-  //1.Sign up process by the func 'signup' (in 'firebase' file).
   const handleSignup = async () => {
     setLoading(true);
 
@@ -49,52 +45,20 @@ const SignUp = () => {
       return;
     }
 
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-    const auth = getAuth();
+    try {
+      await creatUserAndUserDoc(
+        email,
+        passwordRef.current.value,
+        fullName,
+        birthDate
+      );
+    } catch (error) {
+      alert(
+        "Error Code: " + error.code + "\nError message: '" + error.message + "'"
+      );
+    }
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
-        createUser();
-      })
-      .catch((error) => {
-        alert(
-          "Error Code: " +
-            error.code +
-            "\nError message: '" +
-            error.message +
-            "'"
-        );
-      });
     setLoading(false);
-  };
-
-  const createUser = async () => {
-    const auth = getAuth();
-    //2.The user object has basic properties such as display name, email, uid...
-    const user = auth.currentUser;
-    const uid = user.uid;
-    //2.2.Create a ref of the users list in the DB.
-    const usersListRef = doc(db, "Users", uid);
-
-    //2.3.Create user func in firestore
-    await setDoc(usersListRef, {
-      fullName: newName,
-      dateOfBirth: Timestamp.fromDate(new Date(newDate)).toDate(),
-      createdAt: serverTimestamp(),
-      email: newEmail,
-      user_ID: uid,
-      joinPlatform: "Web",
-      isAdmin: false,
-    })
-      .then(() => {
-        alert("User data added successfully!");
-      })
-      .catch((error) => {
-        alert("Unsuccessful operation, error:", error);
-      });
   };
 
   return (
@@ -120,7 +84,7 @@ const SignUp = () => {
             placeholder="Israel israeli"
             id="NameField"
             onChange={(event) => {
-              setNewName(event.target.value);
+              setFullName(event.target.value);
             }}
           />
         </p>
@@ -137,7 +101,7 @@ const SignUp = () => {
             placeholder="Birthday"
             id="BirthdayField"
             onChange={(event) => {
-              setNewDate(event.target.value);
+              setBirthDate(event.target.value);
             }}
           />
         </p>
@@ -153,7 +117,7 @@ const SignUp = () => {
             id="EmailField"
             aria-describedby="emailHelp"
             onChange={(event) => {
-              setNewEmail(event.target.value);
+              setEmail(event.target.value);
             }}
             placeholder="Enter email"
             ref={emailRef}
@@ -195,20 +159,16 @@ const SignUp = () => {
             Must be at least 6 characters.
           </small>
         </p>
-        <Link to="/about">
-          {" "}
-          <button
-            type="submit"
-            className="btn btn-outline-primary btn-block"
-            id="Submit"
-            disabled={loading || currentUser}
-            onClick={() => {
-              handleSignup();
-            }}
-          >
-            Submit
-          </button>
-        </Link>
+
+        <button
+          type="submit"
+          className="btn btn-outline-primary btn-block"
+          id="Submit"
+          disabled={loading || currentUser}
+          onClick={handleSignup}
+        >
+          Submit
+        </button>
       </Form>
       <br />
       <br />
