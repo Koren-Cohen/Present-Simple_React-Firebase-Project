@@ -1,10 +1,12 @@
-import { db, getUserData } from "../../../firebase";
+import { db, getUserData, deleteUserFirebase } from "../../../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import moment from "moment";
 import { getAuth } from "firebase/auth";
 import { Button } from "react-bootstrap";
 import CreatePostPopup from "../PostsPage/CreatePostPopup";
+import { Router, Switch, Route } from "react-router-dom";
+import About from "../About/About";
 
 export default function Profile() {
   //The CreatePostPopup() useState
@@ -44,6 +46,19 @@ export default function Profile() {
       alert("No such Document");
     }
   });
+
+  const handleDeleteUser = async () => {
+    const answer = window.confirm(
+      "Are you sure you want to delete this User ?"
+    );
+    if (!answer) {
+      return;
+    }
+    const res = await deleteUserFirebase();
+    if (res) {
+      return res;
+    }
+  };
 
   return (
     <div>
@@ -98,7 +113,10 @@ export default function Profile() {
                       </Button>{" "}
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <Button variant="btn btn-outline-danger btn-block">
+                      <Button
+                        variant="btn btn-outline-danger btn-block"
+                        onClick={handleDeleteUser}
+                      >
                         Delete User
                       </Button>
                     </li>

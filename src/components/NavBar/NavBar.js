@@ -11,7 +11,6 @@ import {
   faInfoCircle,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
-//----------------------------------------------------------------------------//
 import "bootstrap/dist/css/bootstrap.css";
 import { Nav, Navbar, Container } from "react-bootstrap";
 import "./NavBar.css";

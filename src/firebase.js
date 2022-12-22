@@ -8,9 +8,11 @@ import {
   onAuthStateChanged,
   signOut,
   updateProfile,
+  deleteUser,
 } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { getFirestore, deleteDoc, doc, getDoc } from "@firebase/firestore";
+import { Route, Link } from "react-router-dom";
 
 // My web app's Firebase configuration
 const firebaseConfig = {
@@ -55,11 +57,14 @@ export async function login(email, password) {
       email,
       password
     );
+
     const userAuth = userCredential.user;
     localStorage.setItem("User Auth", JSON.stringify(userAuth));
 
     const userData = await getUserData();
     localStorage.setItem("User Data", JSON.stringify(userData));
+
+    return window.location.assign("posts_Page");
   } catch (error) {
     alert(
       "Error Code: " + error.code + "\nError message: '" + error.message + "'"
@@ -73,6 +78,7 @@ export async function logout() {
     await signOut(auth);
     localStorage.removeItem("User Auth");
     localStorage.removeItem("User Data");
+    return <Link to="/" />;
   } catch (error) {
     console.log("🚀 - logout - error", error);
   }
@@ -125,6 +131,27 @@ export async function deleteDocument(collectionRef, docId) {
     .catch(() => {
       alert("Failed to delete the document !");
     });
+}
+
+// deleteUser
+export async function deleteUserFirebase() {
+  const user = getLoggedInUser();
+  console.log("🚀 - deleteUserFirebase - user", user);
+
+  try {
+    await deleteDocument("Users", user.uid).then(() => {
+      logout().then(() => {
+        deleteUser(user);
+      });
+    });
+    alert("User deleted successfully");
+    window.location.reload();
+
+    const linkToHomePage = true;
+    return linkToHomePage;
+  } catch (error) {
+    console.log("🚀 - deleteUser - error", error);
+  }
 }
 
 // Storage

@@ -4,12 +4,7 @@ import { login, useAuth, getLoggedInUser } from "../../../firebase";
 import { Link } from "react-router-dom";
 // Font Awesome Source
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAt,
-  faUnlockAlt,
-  faCalendarAlt,
-  faSignature,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAt, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -20,11 +15,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     setLoading(true);
-    try {
-      await login(emailRef.current.value, passwordRef.current.value);
-    } catch {
-      alert("Incorrect password or email !");
-    }
+    await login(emailRef.current.value, passwordRef.current.value);
     setLoading(false);
   };
 
@@ -74,17 +65,15 @@ const Login = () => {
           </small>
         </p>
 
-        <Link to="/about">
-          <button
-            type="submit"
-            className="btn btn-outline-primary btn-block"
-            id="SignIn"
-            disabled={loading || currentUser}
-            onClick={handleLogin}
-          >
-            Sign in
-          </button>
-        </Link>
+        <button
+          type="submit"
+          className="btn btn-outline-primary btn-block"
+          id="SignIn"
+          disabled={loading || currentUser}
+          onClick={handleLogin}
+        >
+          Sign in
+        </button>
       </form>
       <br />
       <br />

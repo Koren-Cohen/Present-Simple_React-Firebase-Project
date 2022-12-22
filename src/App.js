@@ -8,12 +8,10 @@ import Home from "./components/Pages/HomePage/Home";
 import SignUp from "./components/Pages/SignUp/SignUp";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Sticky from "react-sticky-el";
 import { useAuth } from "./firebase";
 
 const App = () => {
   const currentUser = useAuth(); //Uses authentication in all app pages and routers.
-  console.log("🚀 - App - currentUser", currentUser);
 
   return (
     <Router>

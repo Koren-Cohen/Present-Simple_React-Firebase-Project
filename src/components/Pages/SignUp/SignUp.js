@@ -9,17 +9,9 @@ import {
 import { useRef, useState } from "react";
 import "./SignUp.css";
 import { Form } from "react-bootstrap";
-import { signup, useAuth, db } from "../../../firebase";
-import {
-  collection,
-  addDoc,
-  setDoc,
-  serverTimestamp,
-  Timestamp,
-  doc,
-} from "firebase/firestore";
+import { useAuth, db } from "../../../firebase";
+import { setDoc, serverTimestamp, Timestamp, doc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
@@ -95,6 +87,7 @@ const SignUp = () => {
       email: newEmail,
       user_ID: uid,
       joinPlatform: "Web",
+      isAdmin: false,
     })
       .then(() => {
         alert("User data added successfully!");
