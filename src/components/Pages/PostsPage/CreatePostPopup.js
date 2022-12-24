@@ -157,7 +157,7 @@ const CreatePostPopup = (props) => {
               }}
               variant="filled"
               fullWidth
-              label="Select gift category"
+              helperText="Select gift category"
             >
               {giftCategories.map((category) => (
                 <MenuItem key={category.code} value={category.desc}>

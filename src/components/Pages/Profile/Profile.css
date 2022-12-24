@@ -1,16 +1,23 @@
-/* Color Theme:
-Dark gunmetal #0E2533
-Absolute blue #0156CD
-Dark blue #00297a
-Mid blue #7DA2E0
-Soft blue #e4edfa 
-*/
+/* Color Theme: */
+
+:root {
+  --darkGunmetal: #0e2533;
+  --absoluteBlue: #0156cd;
+  --darkBlue: #00297a;
+  --midBlue: #7da2e0;
+  --softBlue: #e4edfa;
+  --appThemeFont: "Poppins", sans-serif;
+}
+
+.cardColor {
+  background-color: var(--softBlue);
+}
 
 body {
   margin-top: 20px;
   color: #0e2533;
   text-align: left;
-  background-color: #e4edfa;
+  background-color: var(--softBlue);
 }
 
 .main-body {
@@ -44,7 +51,7 @@ body {
 }
 
 .gutters-sm > .col,
-.gutters-sm > [class*='col-'] {
+.gutters-sm > [class*="col-"] {
   padding-right: 8px;
   padding-left: 8px;
 }

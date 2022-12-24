@@ -3,11 +3,12 @@ import { db, deleteDocument, getLoggedInUser } from "../../../firebase";
 import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import moment from "moment";
 import "./PostsPage.css";
-import { Row, Col, Container, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import CreatePostPopup from "./CreatePostPopup";
 import React from "react";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Tooltip from "@mui/material/Tooltip";
 
 const PostsPage = () => {
   const [modalShow, setModalShow] = useState(false);
@@ -146,19 +147,31 @@ const PostsPage = () => {
                     </div>
                     <div class="position-absolute top-50 end-0 translate-middle-y">
                       {post.PublishPlatform == "Web" ? (
-                        <img
-                          style={{ borderRadius: "50%" }}
-                          src="./images/webFav.png"
-                          width="20px"
-                          height="20px"
-                        />
+                        <Tooltip
+                          title="Publish platform: Website"
+                          placement="top"
+                          arrow
+                        >
+                          <img
+                            style={{ borderRadius: "50%" }}
+                            src="./images/webFav.png"
+                            width="20px"
+                            height="20px"
+                          />
+                        </Tooltip>
                       ) : (
-                        <img
-                          style={{ borderRadius: "50%" }}
-                          src="./images/androidFav.png"
-                          width="20px"
-                          height="20px"
-                        />
+                        <Tooltip
+                          title="Publish platform: Android"
+                          placement="top"
+                          arrow
+                        >
+                          <img
+                            style={{ borderRadius: "50%" }}
+                            src="./images/androidFav.png"
+                            width="20px"
+                            height="20px"
+                          />
+                        </Tooltip>
                       )}
                     </div>
                   </small>
