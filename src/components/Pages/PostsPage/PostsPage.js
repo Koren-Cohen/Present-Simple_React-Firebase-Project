@@ -9,6 +9,7 @@ import React from "react";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
 
 const PostsPage = () => {
   const [modalShow, setModalShow] = useState(false);
@@ -99,14 +100,17 @@ const PostsPage = () => {
 
                     <div>
                       {deleteBtnPrem(post) ? (
-                        <button
-                          type="button"
-                          onClick={() => deletePost(post.id)}
-                          class="btn btn-outline-danger btn-sm position-absolute top-0 end-0" /*onClick={handleLogout}*/
-                          style={{ margin: "3%" }}
-                        >
-                          <FontAwesomeIcon icon={faTrashAlt} />
-                        </button>
+                        <Tooltip title="Delete post" placement="top" arrow>
+                          <IconButton
+                            style={{ margin: "3%" }}
+                            class="btn btn-outline-danger btn-sm position-absolute top-0 end-0"
+                            size="small"
+                            color="error"
+                            onClick={() => deletePost(post.id)}
+                          >
+                            <FontAwesomeIcon icon={faTrashAlt} />
+                          </IconButton>
+                        </Tooltip>
                       ) : null}
                     </div>
                   </div>

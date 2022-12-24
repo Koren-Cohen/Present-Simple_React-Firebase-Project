@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
-  updateProfile,
+  updatePassword,
   deleteUser,
 } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
@@ -200,6 +200,16 @@ export async function deleteUserFirebase() {
 }
 
 //Upload image
-export async function uploadImage() {
-  console.log("🚀 - uploadImage - crypto.randomUUID()", crypto.randomUUID());
+export async function changeUserPassword(newPassword) {
+  const user = getLoggedInUser();
+  console.log("🚀 - changeUserPassword - user", user);
+
+  try {
+    await updatePassword(user, newPassword);
+    alert("Your password has been changed");
+  } catch (error) {
+    alert(
+      "Error Code: " + error.code + "\nError message: '" + error.message + "'"
+    );
+  }
 }

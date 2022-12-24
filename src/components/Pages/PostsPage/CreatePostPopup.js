@@ -136,7 +136,7 @@ const CreatePostPopup = (props) => {
               variant="filled"
               fullWidth
               id="filled-basic"
-              label="Select event type"
+              helperText="Select event type"
             >
               {events.map((event) => (
                 <MenuItem key={event.code} value={event.desc}>
@@ -191,7 +191,7 @@ const CreatePostPopup = (props) => {
               }}
               variant="filled"
               fullWidth
-              label="Favorite Brand"
+              helperText="Favorite Brand"
             />
             <TextField
               style={{ marginLeft: "5px", marginRight: "5px" }}
@@ -203,7 +203,7 @@ const CreatePostPopup = (props) => {
               }}
               variant="filled"
               fullWidth
-              label="Gift URL link"
+              helperText="Gift URL link"
             />
           </div>
 

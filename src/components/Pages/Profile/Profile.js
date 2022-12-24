@@ -4,9 +4,10 @@ import {
   deleteUserFirebase,
   getLoggedInUser,
   storage,
+  changeUserPassword,
 } from "../../../firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import moment from "moment";
 import { getAuth } from "firebase/auth";
 import CreatePostPopup from "../PostsPage/CreatePostPopup";
@@ -17,6 +18,7 @@ import {
   faUserEdit,
   faUsersSlash,
   faUpload,
+  faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "@mui/material/Tooltip";
 import { getDownloadURL, ref, uploadBytes, listAll } from "firebase/storage";
@@ -37,6 +39,28 @@ export default function Profile() {
   const [usersJoinTime, setUsersJoinTime] = useState("");
   const [imageUpload, setImageUpload] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
+  const [changePass, setChangePass] = useState(false);
+  const [newPassword, setPasswordChange] = useState(false);
+  const [confNewPassword, setConfPasswordChange] = useState(false);
+
+  const handleChangePasswordDiv = () => {
+    setChangePass(!changePass);
+    setPasswordChange("");
+    setConfPasswordChange("");
+  };
+
+  const passwordRef = useRef();
+  const passwordConfRef = useRef();
+
+  const handleChangePassword = async () => {
+    if (passwordConfRef.current.value != passwordRef.current.value) {
+      alert("The password confirmation does not match");
+      return;
+    } else {
+      await changeUserPassword(newPassword);
+      handleChangePasswordDiv();
+    }
+  };
 
   const uploadImage = async () => {
     if (!imageUpload) {
@@ -244,7 +268,11 @@ export default function Profile() {
                       onHide={() => setModalShow(false)}
                     />
                     <Tooltip title="Edit profile" placement="top" arrow>
-                      <IconButton color="primary" size="small">
+                      <IconButton
+                        color="primary"
+                        size="small"
+                        onClick={handleChangePasswordDiv}
+                      >
                         <FontAwesomeIcon icon={faUserEdit} />
                       </IconButton>
                     </Tooltip>
@@ -258,6 +286,59 @@ export default function Profile() {
                       </IconButton>
                     </Tooltip>
                   </div>
+                  {changePass ? (
+                    <div>
+                      <div
+                        class="d-flex"
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginTop: "10px",
+                        }}
+                      >
+                        <b
+                          style={{
+                            margin: "10px",
+                            fontSize: "13px",
+                          }}
+                        >
+                          Change password:{" "}
+                        </b>{" "}
+                        <input ref={passwordRef} type={"password"}></input>
+                        <b
+                          style={{
+                            margin: "10px",
+                            fontSize: "13px",
+                          }}
+                        >
+                          Confirm password:{" "}
+                        </b>{" "}
+                        <input ref={passwordConfRef} type={"password"}></input>
+                        <Tooltip
+                          title="Change password"
+                          placement="right"
+                          arrow
+                        >
+                          <IconButton
+                            color="success"
+                            size="small"
+                            onClick={handleChangePassword}
+                          >
+                            <FontAwesomeIcon icon={faCheckCircle} />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
+
+                      <div
+                        class="d-flex"
+                        style={{
+                          justifyContent: "start",
+                          alignItems: "center",
+                          marginTop: "10px",
+                        }}
+                      ></div>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>
