@@ -36,7 +36,7 @@ const PostsPage = () => {
     user_ID: "",
   });
   const [allPosts, setPosts] = useState([]);
-  const [photosUrls, setPhotosUrls] = useState([]);
+  const [photosUrls, setPhotosUrls] = useState([{ name: "", url: "" }]);
   const listRef = ref(storage, "userProfilePics/");
 
   useEffect(async () => {
@@ -69,6 +69,14 @@ const PostsPage = () => {
     const getAllPosts = async () => {
       const data = await getDocs(q);
       setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+
+      const arr = allPosts.map((doc) => ({
+        ...doc,
+        photoUrl: photosUrls.find((photoObj) => photoObj.name == doc.User_ID),
+      }));
+
+      setPosts(arr);
+      console.log("🚀 - arr - arr", arr);
     };
     await getAllPosts();
 
