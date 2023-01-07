@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
-import { db, deleteDocument, getLoggedInUser } from "../../../firebase";
+import {
+  db,
+  deleteDocument,
+  getLoggedInUser,
+  storage,
+} from "../../../firebase";
 import {
   collection,
   getDocs,
   onSnapshot,
   orderBy,
   query,
-  where,
 } from "firebase/firestore";
 import moment from "moment";
 import "./PostsPage.css";
@@ -17,6 +21,8 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
+import { getDownloadURL, ref, uploadBytes, listAll } from "firebase/storage";
+import { async } from "@firebase/util";
 
 const PostsPage = () => {
   const [modalShow, setModalShow] = useState(false);
@@ -30,19 +36,46 @@ const PostsPage = () => {
     user_ID: "",
   });
   const [allPosts, setPosts] = useState([]);
+  const [photosUrls, setPhotosUrls] = useState([]);
+  const listRef = ref(storage, "userProfilePics/");
 
-  useEffect(() => {
+  useEffect(async () => {
+    const getAllPics = async () => {
+      try {
+        const response = await listAll(listRef);
+        const photos = response.items;
+
+        const photosUrlsArray = photos.map(async (photo) => ({
+          name: photo.name,
+          url: await getDownloadURL(photo),
+        }));
+
+        return Promise.all(photosUrlsArray);
+      } catch (error) {
+        alert(
+          "Error Code: " +
+            error.code +
+            "\nError message: '" +
+            error.message +
+            "'"
+        );
+      }
+    };
+    await getAllPics().then((arr) => {
+      console.log("🚀 - awaitgetAllPics - arr", arr);
+      setPhotosUrls(arr);
+    });
+
     const getAllPosts = async () => {
       const data = await getDocs(q);
       setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
-    getAllPosts();
+    await getAllPosts();
 
     const userDoc = localStorage.getItem("User Data");
     var userDataObj = JSON.parse(userDoc);
 
     setUserData(userDataObj);
-    console.log("🚀 - PostsPage - userData", userData);
   }, []);
 
   //imports the 'GiftPosts' collection from the firestore db
