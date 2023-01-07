@@ -21,7 +21,7 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
-import { getDownloadURL, ref, uploadBytes, listAll } from "firebase/storage";
+import { getDownloadURL, ref, listAll } from "firebase/storage";
 import { async } from "@firebase/util";
 
 const PostsPage = () => {
@@ -37,6 +37,8 @@ const PostsPage = () => {
   });
   const [allPosts, setPosts] = useState([]);
   const [photosUrls, setPhotosUrls] = useState([{ name: "", url: "" }]);
+  const [flag, setFlag] = useState("");
+
   const listRef = ref(storage, "userProfilePics/");
 
   useEffect(async () => {
@@ -68,15 +70,15 @@ const PostsPage = () => {
 
     const getAllPosts = async () => {
       const data = await getDocs(q);
-      setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      const posts = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 
-      const arr = allPosts.map((doc) => ({
-        ...doc,
-        photoUrl: photosUrls.find((photoObj) => photoObj.name == doc.User_ID),
-      }));
-
-      setPosts(arr);
-      console.log("🚀 - arr - arr", arr);
+      setPosts(
+        posts.map((doc) => ({
+          ...doc,
+          photoUrl: photosUrls.find((photoObj) => photoObj.name == doc.User_ID),
+        }))
+      );
+      setFlag(1);
     };
     await getAllPosts();
 
@@ -84,7 +86,7 @@ const PostsPage = () => {
     var userDataObj = JSON.parse(userDoc);
 
     setUserData(userDataObj);
-  }, []);
+  }, [flag]);
 
   //imports the 'GiftPosts' collection from the firestore db
   const GiftPostsColleRef = collection(db, "GiftPosts");

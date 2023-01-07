@@ -169,7 +169,7 @@ export default function Profile() {
                           style={{
                             borderRadius: "30px",
                             border: "solid",
-                            borderColor: "#00297a",
+                            borderColor: "#7da2e0",
                           }}
                         />
                       )}
