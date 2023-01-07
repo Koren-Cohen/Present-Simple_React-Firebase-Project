@@ -134,12 +134,21 @@ const PostsPage = () => {
               <div class="position-relative postCard" key={post.id}>
                 <div class="postCardContent">
                   <div class="d-flex">
-                    <img
-                      style={{ borderRadius: "50%" }}
-                      src="./images/Avatar.jpg"
-                      width="10%"
-                      height="10%"
-                    />
+                    {post.photoUrl ? (
+                      <img
+                        style={{ borderRadius: "50%" }}
+                        src={post.photoUrl.url}
+                        width="10%"
+                        height="10%"
+                      />
+                    ) : (
+                      <img
+                        style={{ borderRadius: "50%" }}
+                        src="./images/Avatar.jpg"
+                        width="10%"
+                        height="10%"
+                      />
+                    )}
                     <h5
                       class="postTitle"
                       style={{ marginLeft: "3%", marginTop: "5px" }}
