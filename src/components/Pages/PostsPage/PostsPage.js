@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { db, deleteDocument, getLoggedInUser } from "../../../firebase";
-import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import moment from "moment";
 import "./PostsPage.css";
 import { Button } from "react-bootstrap";
@@ -26,7 +33,7 @@ const PostsPage = () => {
 
   useEffect(() => {
     const getAllPosts = async () => {
-      const data = await getDocs(GiftPostsColleRef);
+      const data = await getDocs(q);
       setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
     getAllPosts();
@@ -40,6 +47,7 @@ const PostsPage = () => {
 
   //imports the 'GiftPosts' collection from the firestore db
   const GiftPostsColleRef = collection(db, "GiftPosts");
+  const q = query(GiftPostsColleRef, orderBy("Created_At", "desc"));
 
   function deletePost(docId) {
     const answer = window.confirm("Are you sure you want to delete this post?");
