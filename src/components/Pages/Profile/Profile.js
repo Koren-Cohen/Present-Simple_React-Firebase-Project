@@ -153,12 +153,24 @@ export default function Profile() {
                   <div class="card-body">
                     <div class="d-flex flex-column align-items-center text-center">
                       {profileImage ? (
-                        <img src={profileImage} alt="Admin" width="150" />
+                        <img
+                          src={profileImage}
+                          width="150"
+                          style={{
+                            borderRadius: "30px",
+                            border: "solid",
+                            borderColor: "#7da2e0",
+                          }}
+                        />
                       ) : (
                         <img
                           src="./images/Avatar.jpg"
-                          alt="Admin"
                           width="150"
+                          style={{
+                            borderRadius: "30px",
+                            border: "solid",
+                            borderColor: "#00297a",
+                          }}
                         />
                       )}
 
