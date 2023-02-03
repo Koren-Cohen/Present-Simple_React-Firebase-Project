@@ -30,18 +30,23 @@ const SignUp = () => {
 
     if (fullNameRef.current.value == "" || !fullNameRef.current.value) {
       alert("'Full Name' field is empty.\nPlease input value.");
+      setLoading(false);
       return;
     } else if (dateRef.current.value == "" || !dateRef.current.value) {
       alert("'Date of birth' field is empty.\nPlease input value.");
+      setLoading(false);
       return;
     } else if (emailRef.current.value == "" || !emailRef.current.value) {
       alert("'Email' field is empty.\nPlease input value.");
+      setLoading(false);
       return;
     } else if (passwordRef.current.value == "" || !passwordRef.current.value) {
       alert("'Password' field is empty.\nPlease input value.");
+      setLoading(false);
       return;
     } else if (passwordConfRef.current.value != passwordRef.current.value) {
       alert("The password confirmation does not match");
+      setLoading(false);
       return;
     }
 
@@ -160,15 +165,34 @@ const SignUp = () => {
           </small>
         </p>
 
-        <button
-          type="submit"
-          className="btn btn-outline-primary btn-block"
-          id="Submit"
-          disabled={loading || currentUser}
-          onClick={handleSignup}
-        >
-          Submit
-        </button>
+        {loading ? (
+          <div class="d-flex justify-content-center">
+            <button
+              className="btn btn-outline-primary btn-block"
+              id="Submit"
+              type="button"
+              disabled
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              <span>&nbsp; Loading...</span>
+            </button>
+          </div>
+        ) : (
+          <button
+            type="submit"
+            className="btn btn-outline-primary btn-block"
+            id="Submit"
+            disabled={loading || currentUser}
+            onClick={handleSignup}
+          >
+            Submit
+          </button>
+        )}
+        
       </Form>
       <br />
       <br />

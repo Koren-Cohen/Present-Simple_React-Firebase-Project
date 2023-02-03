@@ -15,6 +15,17 @@ const Login = () => {
 
   const handleLogin = async () => {
     setLoading(true);
+
+    if (!emailRef.current.value) {
+      alert("'Email' field is empty.\nPlease input value.");
+      setLoading(false);
+      return;
+    } else if (!passwordRef.current.value) {
+      alert("'Password' field is empty.\nPlease input value.");
+      setLoading(false);
+      return;
+    }
+
     await login(emailRef.current.value, passwordRef.current.value);
     setLoading(false);
   };
@@ -65,15 +76,34 @@ const Login = () => {
           </small>
         </p>
 
-        <button
-          type="submit"
-          className="btn btn-outline-primary btn-block"
-          id="SignIn"
-          disabled={loading || currentUser}
-          onClick={handleLogin}
-        >
-          Sign in
-        </button>
+        {loading ? (
+          <div class="d-flex justify-content-center">
+            <button
+              className="btn btn-outline-primary btn-block"
+              id="SignIn"
+              type="button"
+              disabled
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              <span>&nbsp; Loading...</span>
+            </button>
+          </div>
+        ) : (
+          <button
+            type="submit"
+            className="btn btn-outline-primary btn-block"
+            id="SignIn"
+            disabled={loading || currentUser}
+            onClick={handleLogin}
+          >
+            Sign in
+          </button>
+        )}
+
       </form>
       <br />
       <br />
