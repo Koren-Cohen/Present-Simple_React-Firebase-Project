@@ -23,6 +23,7 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import { getDownloadURL, ref, listAll } from "firebase/storage";
 import { async } from "@firebase/util";
+import { fontSize } from "@mui/system";
 
 const PostsPage = () => {
   const [modalShow, setModalShow] = useState(false);
@@ -129,6 +130,11 @@ const PostsPage = () => {
             onHide={() => setModalShow(false)}
           />
         </div>
+
+        <div className="newPostPopupBtn" style={{ fontSize: "14px" }}>
+          (Ordered by: Newest Post ← Oldest Post)
+        </div>
+
         <div style={{ flexWrap: "wrap" }} class="d-flex justify-content-center">
           {/* Show all the posts list  */}
           {allPosts.map((post) => {
